@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+  <meta charset="utf-8">
   <title>BlockMaster</title>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -172,9 +172,9 @@ body {
   <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
   <div id="menu">
     <h1>Menu</h1>
-    <button id="start-button" aria-label="Start game">Commencer le Jeu</button>
-    <button id="instructions-button" aria-label="Instructions">Instructions</button>
-    <button id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
+<button type="button" id="start-button" aria-label="Start game">Commencer le Jeu</button>
+<button type="button" id="instructions-button" aria-label="Instructions">Instructions</button>
+<button type="button" id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
   </div>
   <div id="instructions-container" style="display: none;">
         <h1>Instructions</h1>
@@ -195,13 +195,13 @@ body {
             <strong>Astuce</strong>
             Essayez de garder la pile de blocs aussi basse que possible. Plus la pile est haute, plus il est difficile de trouver un emplacement pour les blocs suivants et le risque de perdre la partie augmente.
         </p>
-    <button id="close-instructions-button">Fermer les instructions</button>
+    <button type="button" id="close-instructions-button">Fermer les instructions</button>
   </div>
   
 <div id="score-container" class="hidden">
   <h1>Score</h1>
   <p id="score">0</p>
-  <button id="close-score-button">Retour</button>
+  <button type="button" id="close-score-button">Retour</button>
 </div>
 
   <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
@@ -210,10 +210,10 @@ body {
     <h1 id="title">BlockMaster</h1>
 
     <div id="controls">
-      <button id="deplacer-gauche">Déplacer à gauche</button>
-      <button id="deplacer-droite">Déplacer à droite</button>
-      <button id="tourner-gauche">Tourner à gauche</button>
-      <button id="tourner-droite">Tourner à droite</button>
+<button type="button" id="deplacer-gauche">Déplacer à gauche</button>
+<button type="button" id="deplacer-droite">Déplacer à droite</button>
+<button type="button" id="tourner-gauche">Tourner à gauche</button>
+<button type="button" id="tourner-droite">Tourner à droite</button>
     </div>
   </div>
 
