@@ -190,6 +190,9 @@ body {
 </body>
 
 <script>
+"use strict";
+/*jshint esversion: 12 */
+
 // Initialisation des variables score et lines à 0
 let score = 0;
 let lines = 0;
@@ -198,6 +201,7 @@ let lines = 0;
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 
 // Fonction qui génère une séquence de noms de tétraminos (formes des blocs du jeu Tetris)
 function generateSequence() {
