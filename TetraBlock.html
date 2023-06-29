@@ -514,8 +514,8 @@ document.addEventListener('keydown', function(e) {
 
   // Gauche et droite
   if (e.which === 37 || e.which === 39) {
-    const col = e.which === 37
-      ? tetromino.col - 1
+    const col = e.which === 37 ?
+      tetromino.col - 1
       : tetromino.col + 1;
 
     if (isValidMove(tetromino.matrix, tetromino.row, col)) {
