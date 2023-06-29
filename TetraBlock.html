@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BlockMaster</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root {
+  /* Définition des variables CSS pour les couleurs primaires, secondaires, en surbrillance et le padding des boutons */
+  --primary-color: #000;
+  --secondary-color: #fff;
+  --highlight-color: lightblue;
+  --button-padding: 1em 2em;
+}
+
+* {
+  /* Réinitialisation des marges et des paddings, utilisation de box-sizing pour inclure le padding et la bordure dans la taille des éléments, et application d'une transition douce sur toutes les propriétés */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+body {
+  /* Configuration du body pour être un conteneur flex, centré, avec une image d'arrière-plan spécifique et une couleur de texte secondaire */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://cdn.discordapp.com/attachments/1112819271496630392/1123686036485193819/thegoscq_A_Tetris_wallpaper_a_Tetris_game_matrix_with_colorful__dfd81e46-cc7d-4c8d-a8ff-b594c6832ec4.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--secondary-color);
+}
+
+#menu {
+  /* Le menu est un conteneur flex, centré, de hauteur complète avec une couleur d'arrière-plan primaire et une couleur de texte secondaire */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+#menu h1 {
+  /* Spécifie la taille de la police du titre dans le menu et la marge en dessous */
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+#menu button {
+  /* Définit le style des boutons dans le menu */
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: none;
+  padding: var(--button-padding);
+  margin: 0.5em 0;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  /* Ajuste la taille de la police du titre et le padding du bouton dans le menu pour les écrans de moins de 768px */
+  #menu h1 {
+    font-size: 1.5em;
+  }
+
+  #menu button {
+    padding: 0.5em 1em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Ajuste la taille de l'arrière-plan pour les écrans de moins de 480px */
+  body {
+    background-size: 50% 50%;
+  }
+}
+
+#game {
+  /* Définit le style de l'élément #game avec un fond de couleur primaire et une bordure de couleur secondaire */
+  background: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  margin: auto;
+  display: block;
+}
+
+#game-container {
+  /* Style du conteneur du jeu lorsqu'il n'est pas démarré */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--highlight-color);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: auto;
+}
+
+#game-container.game-started {
+  /* Style du conteneur du jeu lorsqu'il est démarré */
+  display: flex;
+}
+
+#game-canvas {
+  /* Le canvas du jeu est caché par défaut */
+  display: none;
+}
+
+#controls {
+  /* Style des contrôles du jeu, situés au bas de la page */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#score {
+  /* Style de l'affichage du score, positionné en haut à gauche */
+  position: absolute;
+  top: 50px;
+  left: 25%;
+  transform: translateX(-50%);
+  color: var(--secondary-color);
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+#title {
+  /* Style de l'affichage du titre, positionné en haut au centre */
+  position: absolute;
+  top: 0;
+  left: 20%;
+  transform: translateX(-50%);
+  color: var(--primary-color);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 20px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* En cas de préférence pour des animations réduites (défini par le système d'exploitation de l'utilisateur), toutes les transitions sont désactivées. */
+  * {
+    transition: none !important;
+  }
+}
+</style>
+
+</head>
+
+<body>
+  <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
+  <div id="menu">
+    <h1>Menu</h1>
+    <button id="start-button" aria-label="Start game">Commencer le Jeu</button>
+    <button id="instructions-button" aria-label="Instructions">Instructions</button>
+    <button id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
+  </div>
+
+  <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
+  <div id="game-container">
+    <canvas id="game-canvas" width="320" height="640"></canvas>
+    <h1 id="title">Maître des Blocs</h1>
+
+    <div id="controls">
+      <button id="deplacer-gauche">Déplacer à gauche</button>
+      <button id="deplacer-droite">Déplacer à droite</button>
+      <button id="tourner-gauche">Tourner à gauche</button>
+      <button id="tourner-droite">Tourner à droite</button>
+    </div>
+  </div>
+
+  <!-- Paragraphe contenant un lien vers le validateur CSS du W3C avec une image indiquant que le CSS est valide -->
+  <p style="position: fixed; top: 0; right: 0;">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img style="border:0;width:88px;height:31px"
+        src="http://jigsaw.w3.org/css-validator/images/vcss"
+        alt="CSS Valide !" />
+    </a>
+  </p>
+</body>
+
+<script>
+// Initialisation des variables score et lines à 0
+let score = 0;
+let lines = 0;
+
+// Fonction qui génère un nombre aléatoire entre un minimum et un maximum inclus
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// Fonction qui génère une séquence de noms de tétraminos (formes des blocs du jeu Tetris)
+function generateSequence() {
+  const sequence = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']; // Tous les types de tétraminos
+
+  while (sequence.length) {
+    const rand = getRandomInt(0, sequence.length - 1); // On génère un index aléatoire
+    const name = sequence.splice(rand, 1)[0]; // On retire le tétramino à cet index de la séquence et on le récupère
+    tetrominoSequence.push(name); // On ajoute ce tétramino à la séquence de tétraminos
+  }
+}
+
+// Fonction qui retourne le prochain tétramino à afficher sur le terrain de jeu
+function getNextTetromino() {
+  if (tetrominoSequence.length === 0) {
+    generateSequence(); // Si la séquence est vide, on en génère une nouvelle
+  }
+
+  const name = tetrominoSequence.pop(); // On retire le prochain tétramino de la séquence
+  const matrix = tetrominos[name]; // On récupère la matrice du tétramino correspondant
+
+  // On calcule la position initiale du tétramino sur le terrain de jeu
+  const col = playfield[0].length / 2 - Math.ceil(matrix[0].length / 2);
+  const row = name === 'I' ? -1 : -2;
+
+  return {
+    name: name,    // Nom du tétramino
+    matrix: matrix, // Matrice du tétramino
+    row: row,  // Position en ligne du tétramino
+    col: col  // Position en colonne du tétramino
+  };
+}
+
+// Fonction qui fait pivoter une matrice (utilisée pour la rotation des tétraminos)
+function rotate(matrix) {
+  const N = matrix.length - 1;
+  const result = Array.from({ length: N + 1 }, () => Array(N + 1).fill(0));
+
+  for(let i = 0; i <= N; i++) {
+    for(let j = 0; j <= N; j++) {
+      result[j][N - i] = matrix[i][j]; // On remplit la nouvelle matrice en pivotant celle d'origine
+    }
+  }
+
+  return result;
+}
+
+// Fonction pour vérifier si une cellule donnée est à l'intérieur du terrain de jeu
+function isInsidePlayfield(cellCol, cellRow, matrixRowLength, matrixColLength) {
+  // Si la cellule est en dehors du terrain de jeu, on retourne false
+  return !(cellCol < 0 || cellCol >= matrixColLength || cellRow >= matrixRowLength);
+}
+
+// Fonction pour vérifier si une cellule donnée est vide
+function isCellEmpty(cellRow, cellCol) {
+  // Si la cellule est vide, on retourne true
+  return !playfield[cellRow][cellCol];
+}
+
+// Fonction pour vérifier si le mouvement d'un tetramino est valide
+function isValidMove(matrix, cellRow, cellCol) {
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      if (matrix[row][col]) {
+        // Si la cellule n'est pas dans le terrain de jeu ou si elle n'est pas vide, le mouvement n'est pas valide
+        if (!isInsidePlayfield(cellCol + col, cellRow + row, playfield.length, playfield[0].length) || !isCellEmpty(cellRow + row, cellCol + col)) {
+          return false;
+        }
+      }
+    }
+  }
+  // Si toutes les cellules sont valides, le mouvement est valide
+  return true;
+}
+
+// Fonction pour placer un tétramino sur le terrain de jeu
+function placeTetromino() {
+  for (let row = 0; row < tetromino.matrix.length; row++) {
+    for (let col = 0; col < tetromino.matrix[row].length; col++) {
+      if (tetromino.matrix[row][col]) {
+        // Si le tétramino dépasse le haut du terrain de jeu, la partie est terminée
+        if (tetromino.row + row < 0) {
+          return showGameOver();
+        }
+        // On place le tétramino sur le terrain de jeu
+        playfield[tetromino.row + row][tetromino.col + col] = tetromino.name;
+      }
+    }
+  }
+
+  // On vérifie si une ligne est complète
+  for (let row = playfield.length - 1; row >= 0; ) {
+    if (playfield[row].every(cell => !!cell)) {
+      // Si une ligne est complète, on augmente le score et on déplace toutes les lignes du dessus vers le bas
+      score++;
+
+      for (let r = row; r >= 0; r--) {
+        for (let c = 0; c < playfield[r].length; c++) {
+          playfield[r][c] = playfield[r-1][c];
+        }
+      }
+    }
+    else {
+      // Si la ligne n'est pas complète, on passe à la ligne suivante
+      row--;
+    }
+  }
+
+// On récupère le prochain tétramino
+tetromino = getNextTetromino();
+}
+
+// Fonction pour afficher le message de fin de partie
+function showGameOver() {
+  // On arrête l'animation
+  cancelAnimationFrame(rAF);
+  gameOver = true;
+
+  // On prépare le message de fin de partie
+  context.fillStyle = 'black';
+  context.globalAlpha = 0.75;
+  context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
+  context.globalAlpha = 1;
+  context.fillStyle = 'white';
+  context.font = '36px monospace';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
+}
+
+// On récupère le canvas et son contexte
+const canvas = document.getElementById('game-canvas');
+const context = canvas.getContext('2d');
+
+// On définit la taille des cases et on prépare le terrain de jeu et la séquence de tétraminos
+const grid = 32;
+const tetrominoSequence = [];
+const playfield = [];
+
+// On prépare le terrain de jeu
+for (let row = -2; row < 20; row++) {
+  playfield[row] = [];
+  for (let col = 0; col < 10; col++) {
+    playfield[row][col] = 0;
+  }
+}
+
+// On définit les différentes formes de tétraminos
+const tetrominos = {
+  'I': [
+    [0,0,0,0],
+    [1,1,1,1],
+    [0,0,0,0],
+    [0,0,0,0]
+  ],
+  'J': [
+    [1,0,0],
+    [1,1,1],
+    [0,0,0],
+  ],
+  'L': [
+    [0,0,1],
+    [1,1,1],
+    [0,0,0],
+  ],
+  'O': [
+    [1,1],
+    [1,1],
+  ],
+  'S': [
+    [0,1,1],
+    [1,1,0],
+    [0,0,0],
+  ],
+  'Z': [
+    [1,1,0],
+    [0,1,1],
+    [0,0,0],
+  ],
+  'T': [
+    [0,1,0],
+    [1,1,1],
+    [0,0,0],
+  ]
+};
+
+// On définit les couleurs des différents tétraminos
+const colors = {
+  'I': 'cyan',
+  'O': 'yellow',
+  'T': 'purple',
+  'S': 'green',
+  'Z': 'red',
+  'J': 'blue',
+  'L': 'orange'
+};
+
+// On initialise quelques variables
+let count = 0;
+let tetromino = getNextTetromino();
+let rAF = null;
+let gameOver = false;
+
+// Fonction principale du jeu, exécutée en boucle
+function loop() {
+  // On demande la prochaine image d'animation
+  rAF = requestAnimationFrame(loop);
+
+  // On efface le canvas
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // On dessine la grille
+  context.strokeStyle = 'white';
+  for (let x = 0; x < canvas.width; x += grid) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, canvas.height);
+    context.stroke();
+  }
+  
+  for (let y = 0; y < canvas.height; y += grid) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(canvas.width, y);
+    context.stroke();
+  }
+
+  // On affiche le score et les lignes complétées
+  context.fillStyle = 'black';  
+  context.font = '12px "Press Start 2P"';
+  context.textAlign = 'right'; 
+  context.fillText('Score: ' + score, canvas.width - 10, 20);
+  context.fillText('Lignes: ' + lines, canvas.width - 10, 40);
+
+  // On dessine les tétraminos déjà placés sur le terrain de jeu
+  for (let row = 0; row < 20; row++) {
+    for (let col = 0; col < 10; col++) {
+      if (playfield[row][col]) {
+        const name = playfield[row][col];
+        context.fillStyle = colors[name];
+        context.fillRect(col * grid, row * grid, grid - 1, grid - 1);
+      }
+    }
+  }
+
+  // On dessine le tétramino qui est actuellement en train de tomber
+  if (tetromino) {
+    if (++count > (35 - Math.floor(score / 10))) {
+      tetromino.row++;
+      count = 0;
+
+      if (!isValidMove(tetromino.matrix, tetromino.row, tetromino.col)) {
+        tetromino.row--;
+        placeTetromino();
+      }
+    }
+
+    context.fillStyle = colors[tetromino.name];
+
+    for (let row = 0; row < tetromino.matrix.length; row++) {
+      for (let col = 0; col < tetromino.matrix[row].length; col++) {
+        if (tetromino.matrix[row][col]) {
+          context.fillRect((tetromino.col + col) * grid, (tetromino.row + row) * grid, grid - 1, grid - 1);
+        }
+      }
+    }
+  }
+}
+// Événements de clavier
+document.addEventListener('keydown', function(e) {
+  if (gameOver) return;
+
+  // Gauche et droite
+  if (e.which === 37 || e.which === 39) {
+    const col = e.which === 37
+      ? tetromino.col - 1
+      : tetromino.col + 1;
+
+    if (isValidMove(tetromino.matrix, tetromino.row, col)) {
+      tetromino.col = col;
+    }
+  }
+
+  // Haut (rotation)
+  if (e.which === 38) {
+    const matrix = rotate(tetromino.matrix);
+    if (isValidMove(matrix, tetromino.row, tetromino.col)) {
+      tetromino.matrix = matrix;
+    }
+  }
+
+  // Bas (accélère la descente)
+  if(e.which === 40) {
+    const row = tetromino.row + 1;
+
+    if (!isValidMove(tetromino.matrix, row, tetromino.col)) {
+      tetromino.row = row - 1;
+
+      placeTetromino();
+      return;
+    }
+
+    tetromino.row = row;
+  }
+});
+
+// Événements de boutons de contrôle
+document.getElementById('deplacer-gauche').addEventListener('click', function() {
+  if (!gameOver && isValidMove(tetromino.matrix, tetromino.row, tetromino.col - 1)) {
+    tetromino.col--;
+  }
+});
+
+document.getElementById('deplacer-droite').addEventListener('click', function() {
+  if (!gameOver && isValidMove(tetromino.matrix, tetromino.row, tetromino.col + 1)) {
+    tetromino.col++;
+  }
+});
+
+document.getElementById('tourner-gauche').addEventListener('click', function() {
+  if (!gameOver) {
+    const matrix = rotate(rotate(rotate(tetromino.matrix)));
+    if (isValidMove(matrix, tetromino.row, tetromino.col)) {
+      tetromino.matrix = matrix;
+    }
+  }
+});
+
+document.getElementById('tourner-droite').addEventListener('click', function() {
+  if (!gameOver) {
+    const matrix = rotate(tetromino.matrix);
+    if (isValidMove(matrix, tetromino.row, tetromino.col)) {
+      tetromino.matrix = matrix;
+    }
+  }
+});
+
+// Événement du bouton de démarrage
+document.getElementById('start-button').addEventListener('click', function() {
+
+  // On ajoute la classe pour indiquer que le jeu a commencé
+  document.getElementById('game-container').classList.add('game-started');
+
+  // On cache le menu et on affiche le jeu
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById("game-canvas").style.display = "block";
+
+  // On vérifie que le navigateur supporte requestAnimationFrame
+  if (!window.requestAnimationFrame) {
+    window.alert("Désolé, votre navigateur ne supporte pas requestAnimationFrame.");
+    return;
+  }
+
+  rAF = requestAnimationFrame(loop);
+});
+
+</script>
+</body>
+</html>
