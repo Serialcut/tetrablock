@@ -79,6 +79,19 @@ body {
     background-size: 50% 50%;
   }
 }
+#instructions-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 15px;
+  display: none; 
+  justify-content: center;
+  align-items: center;
+}
 
 #game {
   /* Définit le style de l'élément #game avec un fond de couleur primaire et une bordure de couleur secondaire */
@@ -154,9 +167,7 @@ body {
   }
 }
 </style>
-
 </head>
-
 <body>
   <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
   <div id="menu">
@@ -165,11 +176,32 @@ body {
     <button id="instructions-button" aria-label="Instructions">Instructions</button>
     <button id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
   </div>
+  <div id="instructions-container" style="display: none;">
+        <h1>Instructions</h1>
+        <p>
+            <strong>Instructions pour Tetris</strong>
+            Tetris est un jeu de puzzle classique dans lequel les joueurs doivent organiser des blocs de différentes formes qui tombent du haut de l'écran. L'objectif du jeu est d'empiler ces blocs de manière à remplir complètement les lignes horizontales. Lorsqu'une ligne est complètement remplie, elle disparaît et libère de l'espace pour de nouveaux blocs.
+            <br><br>
+            <strong>Commandes de jeu</strong>
+            <ul>
+                <li><strong>Flèche gauche :</strong> déplace le bloc en cours de chute vers la gauche.</li>
+                <li><strong>Flèche droite :</strong> déplace le bloc en cours de chute vers la droite.</li>
+                <li><strong>Flèche vers le bas :</strong> accélère la chute du bloc en cours.</li>
+                <li><strong>Flèche vers le haut :</strong> tourne le bloc en cours de chute de 90 degrés dans le sens des aiguilles d'une montre.</li>
+            </ul>
+            <strong>Objectif du jeu</strong>
+            L'objectif est de marquer autant de points que possible en remplissant des lignes horizontales avec des blocs. Plus vous remplissez de lignes en même temps, plus vous gagnez de points. Le jeu se termine lorsque les blocs s'accumulent jusqu'au haut de l'écran.
+            <br><br>
+            <strong>Astuce</strong>
+            Essayez de garder la pile de blocs aussi basse que possible. Plus la pile est haute, plus il est difficile de trouver un emplacement pour les blocs suivants et le risque de perdre la partie augmente.
+        </p>
+    <button id="close-instructions-button">Fermer les instructions</button>
+  </div>
 
   <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
   <div id="game-container">
     <canvas id="game-canvas" width="320" height="640"></canvas>
-    <h1 id="title">Maître des Blocs</h1>
+    <h1 id="title">BlockMaster</h1>
 
     <div id="controls">
       <button id="deplacer-gauche">Déplacer à gauche</button>
@@ -548,7 +580,7 @@ document.getElementById('start-button').addEventListener('click', function() {
   // On cache le menu et on affiche le jeu
   document.getElementById('menu').style.display = 'none';
   document.getElementById("game-canvas").style.display = "block";
-
+  
   // On vérifie que le navigateur supporte requestAnimationFrame
   if (!window.requestAnimationFrame) {
     window.alert("Désolé, votre navigateur ne supporte pas requestAnimationFrame.");
@@ -556,6 +588,26 @@ document.getElementById('start-button').addEventListener('click', function() {
   }
 
   rAF = requestAnimationFrame(loop);
+});
+
+// Événement du bouton d'instructions
+document.getElementById('instructions-button').addEventListener('click', function() {
+  // On ajoute la classe pour indiquer que les instructions sont affichées
+  document.getElementById('instructions-container').classList.add('instructions-started');
+
+  // On cache le menu et on affiche les instructions
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('instructions-container').style.display = 'block';
+});
+
+// Événement du bouton de retour
+document.getElementById('close-instructions-button').addEventListener('click', function() {
+  // On enlève la classe pour indiquer que les instructions sont affichées
+  document.getElementById('instructions-container').classList.remove('instructions-started');
+
+  // On cache les instructions et on affiche le menu
+  document.getElementById('instructions-container').style.display = 'none';
+  document.getElementById('menu').style.display = 'flex';
 });
 
 </script>
