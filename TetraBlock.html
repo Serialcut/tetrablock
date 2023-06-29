@@ -197,6 +197,12 @@ body {
         </p>
     <button id="close-instructions-button">Fermer les instructions</button>
   </div>
+  
+<div id="score-container" class="hidden">
+  <h1>Score</h1>
+  <p id="score">0</p>
+  <button id="close-score-button">Retour</button>
+</div>
 
   <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
   <div id="game-container">
@@ -329,7 +335,7 @@ function placeTetromino() {
     if (playfield[row].every(cell => !!cell)) {
       // Si une ligne est complète, on augmente le score et on déplace toutes les lignes du dessus vers le bas
       score++;
-
+	  lines++;
       for (let r = row; r >= 0; r--) {
         for (let c = 0; c < playfield[r].length; c++) {
           playfield[r][c] = playfield[r-1][c];
@@ -607,6 +613,32 @@ document.getElementById('close-instructions-button').addEventListener('click', f
 
   // On cache les instructions et on affiche le menu
   document.getElementById('instructions-container').style.display = 'none';
+  document.getElementById('menu').style.display = 'flex';
+});
+
+// Événement du bouton de score
+document.getElementById('high-scores-button').addEventListener('click', function() {
+  // On ajoute la classe pour indiquer que le score est affiché
+  document.getElementById('score-container').classList.add('score-started');
+
+  // On récupère le meilleur score depuis le local storage
+  let highScore = localStorage.getItem('highScore') || 0;
+
+  // On affiche le meilleur score dans le conteneur de score
+  document.getElementById('score').innerText = "Meilleur score : " + highScore;
+
+  // On cache le menu et on affiche le conteneur de score
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('score-container').style.display = 'block';
+});
+
+// Événement du bouton de retour
+document.getElementById('close-score-button').addEventListener('click', function() {
+  // On enlève la classe pour indiquer que le score est affiché
+  document.getElementById('score-container').classList.remove('score-started');
+
+  // On cache le score et on affiche le menu
+  document.getElementById('score-container').style.display = 'none';
   document.getElementById('menu').style.display = 'flex';
 });
 
