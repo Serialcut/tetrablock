@@ -63,7 +63,7 @@ body {
   #menu h1 {
     font-size: 1.5em;
   }
-
+
 }
 
 @media screen and (max-width: 480px) {
@@ -84,6 +84,9 @@ body {
   display: none; 
   justify-content: center;
   align-items: center;
+}
+#score-container {
+  display: none;
 }
 
 #game {
@@ -115,7 +118,7 @@ body {
 
 #game-canvas {
   /* Le canvas du jeu est caché par défaut */
-  display: none;
+  display: none;
     background-color: rgb(13, 13, 15);
 }
 #controls {
@@ -159,7 +162,21 @@ body {
     transition: none !important;
   }
 }
+
+@media screen and (min-width: 1080px) and (max-height: 2408px) {
+  /* Exemple de règles spécifiques pour cette résolution */
+  body {
+    background-color: #000;
+  }
+
+  #menu {
+    padding: 10px;
+  }
+
+  /* Ajoutez ici d'autres règles CSS si nécessaire */
+}
 </style>
+
 </head>
 <body>
   <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
@@ -227,7 +244,7 @@ body {
 
 <script>
 "use strict";
-/*jshint esversion: 12 */
+/*jshint esversion: 6 */
 
 // Initialisation des variables score et lines à 0
 let score = 0;
@@ -512,8 +529,8 @@ document.addEventListener('keydown', function(e) {
 
   // Gauche et droite
   if (e.which === 37 || e.which === 39) {
-    const col = e.which === 37
-      ? tetromino.col - 1
+    const col = e.which === 37 ?
+        tetromino.col - 1
       : tetromino.col + 1;
 
     if (isValidMove(tetromino.matrix, tetromino.row, col)) {
@@ -639,7 +656,6 @@ document.getElementById('close-score-button').addEventListener('click', function
   document.getElementById('score-container').style.display = 'none';
   document.getElementById('menu').style.display = 'flex';
 });
-
 </script>
 </body>
 </html>
