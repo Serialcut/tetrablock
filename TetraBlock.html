@@ -19,14 +19,16 @@
   padding: 0;
   box-sizing: border-box;
   transition: all 0.3s ease;
-  touch-action: manipulation;
 }
 
 body {
   width: 100%;
   height: 100vh;
   background: linear-gradient(to right,#16191a , #242424, #16191a);   
-  display: flex;     justify-content: center;     align-items: center;     font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
 } 
 
 #menu {
@@ -120,6 +122,44 @@ body {
   display: none;
     background-color: rgb(13, 13, 15);
 }
+#gameOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    margin: 0 auto;
+    background-color: var(--primary-color); /* Ajoute une couleur d'arrière-plan à la boîte */
+    border-radius: 10px; /* Arrondit les coins de la boîte */
+    padding: 20px; /* Ajoute de l'espace autour du contenu de la boîte */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Ajoute une ombre à la boîte pour la faire ressortir */
+}
+.option {
+    margin-bottom: 20px;
+    font-size: 1.2em; /* Augmente la taille de la police pour une meilleure lisibilité */
+}
+.option label {
+    margin-right: 10px;
+    color: var(--secondary-color); /* Change la couleur du texte pour contraster avec l'arrière-plan */
+}
+.option select, .option input[type="checkbox"] {
+    font-size: 1em; /* Augmente la taille de la police pour une meilleure lisibilité */
+    padding: 5px; /* Ajoute de l'espace autour du texte dans le champ de sélection */
+}
+#options-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 15px;
+  display: none; 
+  justify-content: center;
+  align-items: center;
+}
+
 #controls {
   /* Style des contrôles du jeu, situés au bas de la page */
   position: absolute;
@@ -172,7 +212,6 @@ body {
     padding: 10px;
   }
 
-  /* Ajoutez ici d'autres règles CSS si nécessaire */
 }
 </style>
 
@@ -180,30 +219,26 @@ body {
 <body>
   <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
   <div id="menu">
-    <h1>Menu</h1>
+    <h1>TetraBlock</h1>
     <button id="start-button" aria-label="Start game">Commencer le Jeu</button>
     <button id="instructions-button" aria-label="Instructions">Instructions</button>
     <button id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
+	<button id="options-button" aria-label="Options">Options</button>
   </div>
-  <div id="instructions-container" style="display: hidden;">
-        <h1>Instructions</h1>
-        <p>
-            <strong>Instructions pour Tetris</strong>
-            Tetris est un jeu de puzzle classique dans lequel les joueurs doivent organiser des blocs de différentes formes qui tombent du haut de l'écran. L'objectif du jeu est d'empiler ces blocs de manière à remplir complètement les lignes horizontales. Lorsqu'une ligne est complètement remplie, elle disparaît et libère de l'espace pour de nouveaux blocs.
-            <br><br>
-            <strong>Commandes de jeu</strong>
-            <ul>
-                <li><strong>Flèche gauche :</strong> déplace le bloc en cours de chute vers la gauche.</li>
-                <li><strong>Flèche droite :</strong> déplace le bloc en cours de chute vers la droite.</li>
-                <li><strong>Flèche vers le bas :</strong> accélère la chute du bloc en cours.</li>
-                <li><strong>Flèche vers le haut :</strong> tourne le bloc en cours de chute de 90 degrés dans le sens des aiguilles d'une montre.</li>
-            </ul>
-            <strong>Objectif du jeu</strong>
-            L'objectif est de marquer autant de points que possible en remplissant des lignes horizontales avec des blocs. Plus vous remplissez de lignes en même temps, plus vous gagnez de points. Le jeu se termine lorsque les blocs s'accumulent jusqu'au haut de l'écran.
-            <br><br>
-            <strong>Astuce</strong>
-            Essayez de garder la pile de blocs aussi basse que possible. Plus la pile est haute, plus il est difficile de trouver un emplacement pour les blocs suivants et le risque de perdre la partie augmente.
-        </p>
+<div id="instructions-container" style="display: hidden;">
+  <h1 style="text-align: center; font-family: 'Lato', Courier, monospace;">Aide</h1>
+  <p>
+    <strong>Tetris :</strong> le jeu où les blocs tombent comme des feuilles d’automne. Empilez-les pour remplir les lignes et les faire disparaître. Plus de lignes = plus de points. Si les blocs touchent le haut, c'est game over! 😱
+    <br><br>
+    <strong>Commandes :</strong>
+    <ul>
+      <li>Flèche gauche : bouge à gauche.</li>
+      <li>Flèche droite : bouge à droite.</li>
+      <li>Flèche vers le bas : chute rapide.</li>
+      <li>Flèche vers le haut : rotation du bloc.</li>
+    </ul>
+    <strong>Astuce :</strong> Gardez les blocs en bas pour plus de chances de gagner. Et surtout, amusez-vous bien! 😊
+  </p>
     <button id="close-instructions-button">Fermer les instructions</button>
   </div>
   
@@ -211,6 +246,27 @@ body {
   <h1>Score</h1>
   <p id="score">0</p>
   <button id="close-score-button">Retour</button>
+</div>
+<div id="options-container" style="display: none;">
+    <h1>Options</h1>
+
+    <div class="gameOptions">
+        <label for="grid">Grille:</label>
+        <select id="grid" name="grid">
+            <option value="none">Aucune</option>
+            <option value="standard">Standard</option>
+            <option value="partial">Partielle</option>
+            <option value="vertical">Verticale</option>
+            <option value="full">Pleine</option>
+        </select>
+    </div>
+
+    <div class="option">
+        <label for="ghost">Fantôme:</label>
+        <input type="checkbox" id="ghost" name="ghost" checked>
+    </div>
+
+    <button id="close-options-button">Retour</button>
 </div>
 
   <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
@@ -389,44 +445,23 @@ for (let row = -2; row < 20; row++) {
 }
 
 // On définit les différentes formes de tétraminos
-const tetrominos = {
-  'I': [
-    [0,0,0,0],
-    [1,1,1,1],
-    [0,0,0,0],
-    [0,0,0,0]
-  ],
-  'J': [
-    [1,0,0],
-    [1,1,1],
-    [0,0,0],
-  ],
-  'L': [
-    [0,0,1],
-    [1,1,1],
-    [0,0,0],
-  ],
-  'O': [
-    [1,1],
-    [1,1],
-  ],
-  'S': [
-    [0,1,1],
-    [1,1,0],
-    [0,0,0],
-  ],
-  'Z': [
-    [1,1,0],
-    [0,1,1],
-    [0,0,0],
-  ],
-  'T': [
-    [0,1,0],
-    [1,1,1],
-    [0,0,0],
-  ]
+const tetrominoShapes = {
+  'I': '0/1111/0/0',
+  'J': '100/111/0',
+  'L': '001/111/0',
+  'O': '11/11',
+  'S': '011/110/0',
+  'Z': '110/011/0',
+  'T': '010/111/0'
 };
 
+function createMatrix(shape) {
+  return shape.split('/').map(row => [...row].map(Number));
+}
+
+const tetrominos = Object.fromEntries(
+  Object.entries(tetrominoShapes).map(([name, shape]) => [name, createMatrix(shape)])
+);
 // On définit les couleurs des différents tétraminos
 const colors = {
   'I': 'cyan',
@@ -510,7 +545,7 @@ function loop() {
   }
 }
 // Événements de clavier
-document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function(e) {
   if (gameOver) return;
 
   // Gauche et droite
@@ -548,19 +583,19 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Événements de boutons de contrôle
-document.getElementById('deplacer-gauche').addEventListener('click', function() {
+  document.getElementById('deplacer-gauche').addEventListener('click', function() {
   if (!gameOver && isValidMove(tetromino.matrix, tetromino.row, tetromino.col - 1)) {
     tetromino.col--;
   }
 });
 
-document.getElementById('deplacer-droite').addEventListener('click', function() {
+  document.getElementById('deplacer-droite').addEventListener('click', function() {
   if (!gameOver && isValidMove(tetromino.matrix, tetromino.row, tetromino.col + 1)) {
     tetromino.col++;
   }
 });
 
-document.getElementById('tourner-gauche').addEventListener('click', function() {
+  document.getElementById('tourner-gauche').addEventListener('click', function() {
   if (!gameOver) {
     const matrix = rotate(rotate(rotate(tetromino.matrix)));
     if (isValidMove(matrix, tetromino.row, tetromino.col)) {
@@ -569,7 +604,7 @@ document.getElementById('tourner-gauche').addEventListener('click', function() {
   }
 });
 
-document.getElementById('tourner-droite').addEventListener('click', function() {
+  document.getElementById('tourner-droite').addEventListener('click', function() {
   if (!gameOver) {
     const matrix = rotate(tetromino.matrix);
     if (isValidMove(matrix, tetromino.row, tetromino.col)) {
@@ -578,8 +613,16 @@ document.getElementById('tourner-droite').addEventListener('click', function() {
   }
 });
 
+  document.getElementById("grid").onchange = function() {
+    // Gérer le changement de grille
+}
+
+  document.getElementById("ghost").onchange = function() {
+    // Gérer le changement de l'option fantôme
+}
+
 // Événement du bouton de démarrage
-document.getElementById('start-button').addEventListener('click', function() {
+  document.getElementById('start-button').addEventListener('click', function() {
 
   // On ajoute la classe pour indiquer que le jeu a commencé
   document.getElementById('game-container').classList.add('game-started');
@@ -597,51 +640,35 @@ document.getElementById('start-button').addEventListener('click', function() {
   rAF = requestAnimationFrame(loop);
 });
 
-// Événement du bouton d'instructions
-document.getElementById('instructions-button').addEventListener('click', function() {
-  // On ajoute la classe pour indiquer que les instructions sont affichées
-  document.getElementById('instructions-container').classList.add('instructions-started');
+const menu = document.getElementById('menu');
+const instructionsContainer = document.getElementById('instructions-container');
+const scoreContainer = document.getElementById('score-container');
+const optionsContainer = document.getElementById('options-container');
+const scoreElement = document.getElementById('score');
 
-  // On cache le menu et on affiche les instructions
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('instructions-container').style.display = 'block';
-});
+function showElement(buttonId, targetContainer, targetClass) {
+  document.getElementById(buttonId).addEventListener('click', function() {
+    targetContainer.classList.add(targetClass);
+    menu.style.display = 'none';
+    targetContainer.style.display = 'block';
+  });
+}
 
-// Événement du bouton de retour
-document.getElementById('close-instructions-button').addEventListener('click', function() {
-  // On enlève la classe pour indiquer que les instructions sont affichées
-  document.getElementById('instructions-container').classList.remove('instructions-started');
+function hideElement(buttonId, targetContainer, targetClass) {
+  document.getElementById(buttonId).addEventListener('click', function() {
+    targetContainer.classList.remove(targetClass);
+    targetContainer.style.display = 'none';
+    menu.style.display = 'flex';
+  });
+}
 
-  // On cache les instructions et on affiche le menu
-  document.getElementById('instructions-container').style.display = 'none';
-  document.getElementById('menu').style.display = 'flex';
-});
+showElement('instructions-button', instructionsContainer, 'instructions-started');
+hideElement('close-instructions-button', instructionsContainer, 'instructions-started');
+showElement('high-scores-button', scoreContainer, 'score-started');
+hideElement('close-score-button', scoreContainer, 'score-started');
+showElement('options-button', optionsContainer, 'options-started');
+hideElement('close-options-button', optionsContainer, 'options-started');
 
-// Événement du bouton de score
-document.getElementById('high-scores-button').addEventListener('click', function() {
-  // On ajoute la classe pour indiquer que le score est affiché
-  document.getElementById('score-container').classList.add('score-started');
-
-  // On récupère le meilleur score depuis le local storage
-  let highScore = localStorage.getItem('highScore') || 0;
-
-  // On affiche le meilleur score dans le conteneur de score
-  document.getElementById('score').innerText = "Meilleur score : " + highScore;
-
-  // On cache le menu et on affiche le conteneur de score
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('score-container').style.display = 'block';
-});
-
-// Événement du bouton de retour
-document.getElementById('close-score-button').addEventListener('click', function() {
-  // On enlève la classe pour indiquer que le score est affiché
-  document.getElementById('score-container').classList.remove('score-started');
-
-  // On cache le score et on affiche le menu
-  document.getElementById('score-container').style.display = 'none';
-  document.getElementById('menu').style.display = 'flex';
-});
 </script>
 </body>
 </html>
