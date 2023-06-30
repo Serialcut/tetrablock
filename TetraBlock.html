@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-  <meta charset="utf-8">
   <title>BlockMaster</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 :root {
   /* Définition des variables CSS pour les couleurs primaires, secondaires, en surbrillance et le padding des boutons */
-  --primary-color: #000;
+  --primary-color: #00008B80;
   --secondary-color: #fff;
-  --highlight-color: lightblue;
+  --highlight-color: #e74c3c;
   --button-padding: 1em 2em;
 }
 
 * {
-  /* Réinitialisation des marges et des paddings, utilisation de box-sizing pour inclure le padding et la bordure dans la taille des éléments, et application d'une transition douce sur toutes les propriétés */
+  /* Réinitialisation des marges */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
-body {
-  /* Configuration du body pour être un conteneur flex, centré, avec une image d'arrière-plan spécifique et une couleur de texte secondaire */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-image: url("https://cdn.discordapp.com/attachments/1112819271496630392/1123686036485193819/thegoscq_A_Tetris_wallpaper_a_Tetris_game_matrix_with_colorful__dfd81e46-cc7d-4c8d-a8ff-b594c6832ec4.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  color: var(--secondary-color);
-}
+body { /* Configuration du body pour être un conteneur flex, centré, avec un arrière-plan bleu foncé semi-transparent et une couleur de texte secondaire */ display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: rgba(0, 0, 139, 0.5);
+color: var(--secondary-color);
 
+}
 #menu {
   /* Le menu est un conteneur flex, centré, de hauteur complète avec une couleur d'arrière-plan primaire et une couleur de texte secondaire */
   display: flex;
@@ -172,9 +163,9 @@ body {
   <!-- Div contenant le menu avec des boutons pour démarrer le jeu, voir les instructions et voir les meilleurs scores -->
   <div id="menu">
     <h1>Menu</h1>
-<button type="button" id="start-button" aria-label="Start game">Commencer le Jeu</button>
-<button type="button" id="instructions-button" aria-label="Instructions">Instructions</button>
-<button type="button" id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
+    <button id="start-button" aria-label="Start game">Commencer le Jeu</button>
+    <button id="instructions-button" aria-label="Instructions">Instructions</button>
+    <button id="high-scores-button" aria-label="High scores">Meilleurs Scores</button>
   </div>
   <div id="instructions-container" style="display: none;">
         <h1>Instructions</h1>
@@ -195,13 +186,13 @@ body {
             <strong>Astuce</strong>
             Essayez de garder la pile de blocs aussi basse que possible. Plus la pile est haute, plus il est difficile de trouver un emplacement pour les blocs suivants et le risque de perdre la partie augmente.
         </p>
-    <button type="button" id="close-instructions-button">Fermer les instructions</button>
+    <button id="close-instructions-button">Fermer les instructions</button>
   </div>
   
 <div id="score-container" class="hidden">
   <h1>Score</h1>
   <p id="score">0</p>
-  <button type="button" id="close-score-button">Retour</button>
+  <button id="close-score-button">Retour</button>
 </div>
 
   <!-- Div contenant le conteneur de jeu qui comprend un canvas pour le jeu, un titre et des contrôles pour déplacer et tourner les blocs -->
@@ -210,10 +201,10 @@ body {
     <h1 id="title">BlockMaster</h1>
 
     <div id="controls">
-<button type="button" id="deplacer-gauche">Déplacer à gauche</button>
-<button type="button" id="deplacer-droite">Déplacer à droite</button>
-<button type="button" id="tourner-gauche">Tourner à gauche</button>
-<button type="button" id="tourner-droite">Tourner à droite</button>
+      <button id="deplacer-gauche">Déplacer à gauche</button>
+      <button id="deplacer-droite">Déplacer à droite</button>
+      <button id="tourner-gauche">Tourner à gauche</button>
+      <button id="tourner-droite">Tourner à droite</button>
     </div>
   </div>
 
@@ -514,8 +505,8 @@ document.addEventListener('keydown', function(e) {
 
   // Gauche et droite
   if (e.which === 37 || e.which === 39) {
-    const col = e.which === 37 ?
-      tetromino.col - 1
+    const col = e.which === 37
+      ? tetromino.col - 1
       : tetromino.col + 1;
 
     if (isValidMove(tetromino.matrix, tetromino.row, col)) {
