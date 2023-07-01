@@ -439,6 +439,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('language').addEventListener('change', function() {
     gameSettings.language = this.value;
   });
+// Sélectionnez les éléments du DOM
+const eventCounterElement = document.getElementById('js-event-counter');
+const scoreElement = document.getElementById('js-score');
+const levelElement = document.getElementById('js-level');
+const tetrisElement = document.getElementById('js-tetris');
+const nextPieceElement = document.getElementById('js-next-piece');
+
+// Fonction pour mettre à jour le score
+function updateScore(newScore) {
+  scoreElement.textContent = newScore;
+}
+
+// Fonction pour mettre à jour le niveau
+function updateLevel(newLevel) {
+  levelElement.textContent = newLevel;
+}
+
+// Fonction pour mettre à jour le compteur d'événements
+function updateEventCounter(newCount) {
+  eventCounterElement.textContent = newCount;
+}
+
+// Fonction pour afficher une pièce dans la prévisualisation
+function updateNextPiece(piece) {
+  // Ici, vous devez convertir votre pièce en une représentation HTML et la mettre à jour dans nextPieceElement.
+  // Cela dépend de la façon dont vous avez choisi de représenter une pièce.
+}
+
+// Et ainsi de suite pour les autres éléments...
 
   const menu = document.getElementById('menu');
   const instructionsContainer = document.getElementById('instructions-container');
