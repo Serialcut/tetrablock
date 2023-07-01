@@ -1,5 +1,4 @@
 :root {
-  /* Définition des variables CSS pour les couleurs primaires, secondaires, en surbrillance et le padding des boutons */
   --primary-color: #00008B80;
   --secondary-color: #FFA500;
   --highlight-color: #ADD8E680;
@@ -7,7 +6,6 @@
 }
 
 * {
-  /* Réinitialisation des marges */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -25,7 +23,6 @@ body {
 } 
 
 #menu {
-  /* Le menu est un conteneur flex, centré, de hauteur complète avec une couleur d'arrière-plan primaire et une couleur de texte secondaire */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,13 +33,11 @@ body {
 }
 
 #menu h1 {
-  /* Spécifie la taille de la police du titre dans le menu et la marge en dessous */
   font-size: 2em;
   margin-bottom: 1em;
 }
 
 #menu button {
-  /* Définit le style des boutons dans le menu */
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border: none;
@@ -53,19 +48,17 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  /* Ajuste la taille de la police du titre et le padding du bouton dans le menu pour les écrans de moins de 768px */
   #menu h1 {
     font-size: 1.5em;
   }
-
 }
 
 @media screen and (max-width: 480px) {
-  /* Ajuste la taille de l'arrière-plan pour les écrans de moins de 480px */
   body {
     background-size: 50% 50%;
   }
 }
+
 #instructions-container {
   position: absolute;
   top: 50%;
@@ -75,10 +68,11 @@ body {
   color: var(--primary-color);
   padding: 20px;
   border-radius: 15px;
-  display: none; 
+  display: none;
   justify-content: center;
   align-items: center;
 }
+
 #score-container {
   position: absolute;
   top: 50%;
@@ -88,7 +82,7 @@ body {
   color: #000;
   padding: 20px;
   border-radius: 15px;
-  display: none; 
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -96,11 +90,10 @@ body {
 #score-container h1,
 #score-container div,
 #score-container button {
-  margin-top: 20px; /* Ajouter une marge en haut pour tous les éléments */
+  margin-top: 20px;
 }
 
 #game {
-  /* Définit le style de l'élément #game avec un fond de couleur primaire et une bordure de couleur secondaire */
   background: var(--primary-color);
   border: 1px solid var(--secondary-color);
   margin: auto;
@@ -108,14 +101,13 @@ body {
 }
 
 #game-container {
-  /* Style du conteneur du jeu lorsqu'il n'est pas démarré */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--highlight-color);
   border-radius: 15px;
-  display: none; 
+  display: none;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -123,40 +115,43 @@ body {
 }
 
 #game-container.game-started {
-  /* Style du conteneur du jeu lorsqu'il est démarré */
   display: flex;
 }
 
 #game-canvas {
-  /* Le canvas du jeu est caché par défaut */
   display: none;
-    background-color: rgb(13, 13, 13);
+  background-color: rgb(13, 13, 13);
 }
-#gameOptions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-    margin: 0 auto;
-    background-color: var(--primary-color); /* Ajoute une couleur d'arrière-plan à la boîte */
-    border-radius: 5px; /* Arrondit les coins de la boîte */
-    padding: 20px; /* Ajoute de l'espace autour du contenu de la boîte */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Ajoute une ombre à la boîte pour la faire ressortir */
-}
-.option {
-    margin-bottom: 20px;
-    font-size: 1.2em; /* Augmente la taille de la police pour une meilleure lisibilité */
 
+#gameOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  margin: 0 auto;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+
+.option {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
 .option label {
-    margin-right: 10px;
-    color: var(--primary-color); /* Change la couleur du texte pour contraster avec l'arrière-plan */
+  margin-right: 10px;
+  color: var(--primary-color);
 }
-.option select, .option input[type="checkbox"] {
-    font-size: 1em; /* Augmente la taille de la police pour une meilleure lisibilité */
-    padding: 5px; /* Ajoute de l'espace autour du texte dans le champ de sélection */
+
+.option select,
+.option input[type="checkbox"] {
+  font-size: 1em;
+  padding: 5px;
 }
+
 #options-container {
   position: absolute;
   top: 50%;
@@ -166,13 +161,12 @@ body {
   color: #000;
   padding: 20px;
   border-radius: 15px;
-  display: none; 
+  display: none;
   justify-content: center;
   align-items: center;
 }
 
 #controls {
-  /* Style des contrôles du jeu, situés au bas de la page */
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -183,7 +177,6 @@ body {
 }
 
 #score {
-  /* Style de l'affichage du score, positionné en haut à gauche */
   position: absolute;
   top: 50px;
   left: 25%;
@@ -196,7 +189,6 @@ body {
 }
 
 #title {
-  /* Style de l'affichage du titre, positionné en haut */
   position: absolute;
   top: 0;
   left: 20%;
@@ -208,14 +200,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* En cas de préférence pour des animations réduites (défini par le système d'exploitation de l'utilisateur), toutes les transitions sont désactivées. */
   * {
     transition: none !important;
   }
 }
 
 @media screen and (min-width: 1080px) and (max-height: 2408px) {
-  /* Exemple de règles spécifiques pour cette résolution */
   body {
     background-color: #000;
   }
@@ -223,5 +213,4 @@ body {
   #menu {
     padding: 10px;
   }
-
 }
