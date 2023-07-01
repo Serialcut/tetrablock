@@ -388,32 +388,100 @@ document.getElementById('start-button').addEventListener('click', function() {
 
   rAF = requestAnimationFrame(loop);
 });
+document.addEventListener('DOMContentLoaded', (event) => {
+  let gameSettings = {
+    grid: 'standard',
+    ghost: true,
+    themeColor: 'default',
+    blockSpeed: 5,
+    sound: true,
+    visualEffects: true,
+    language: 'french'
+  };
 
-const menu = document.getElementById('menu');
-const instructionsContainer = document.getElementById('instructions-container');
-const scoreContainer = document.getElementById('score-container');
-const optionsContainer = document.getElementById('options-container');
-const scoreElement = document.getElementById('score');
+  // Fonction pour faire descendre un bloc
+  function moveBlockDown() {
+    // Code pour faire descendre un bloc
+  }
 
-function showElement(buttonId, targetContainer, targetClass) {
-  document.getElementById(buttonId).addEventListener('click', function() {
-    targetContainer.classList.add(targetClass);
-    menu.style.display = 'none';
-    targetContainer.style.display = 'block';
+  // Interval pour déplacer le bloc vers le bas
+  let moveBlockInterval = setInterval(moveBlockDown, 1000 / gameSettings.blockSpeed);
+
+  document.getElementById('grid').addEventListener('change', function() {
+    gameSettings.grid = this.value;
   });
-}
 
-function hideElement(buttonId, targetContainer, targetClass) {
-  document.getElementById(buttonId).addEventListener('click', function() {
-    targetContainer.classList.remove(targetClass);
-    targetContainer.style.display = 'none';
-    menu.style.display = 'flex';
+  document.getElementById('ghost').addEventListener('change', function() {
+    gameSettings.ghost = this.checked;
   });
-}
 
-showElement('instructions-button', instructionsContainer, 'instructions-started');
-hideElement('close-instructions-button', instructionsContainer, 'instructions-started');
-showElement('high-scores-button', scoreContainer, 'score-started');
-hideElement('close-score-button', scoreContainer, 'score-started');
-showElement('options-button', optionsContainer, 'options-started');
-hideElement('close-options-button', optionsContainer, 'options-started');
+  document.getElementById('theme-color').addEventListener('change', function() {
+    gameSettings.themeColor = this.value;
+  });
+
+  // Écouteur d'événements pour mettre à jour la vitesse des blocs
+  document.getElementById('block-speed').addEventListener('change', function() {
+    gameSettings.blockSpeed = this.value;
+
+    // Mettre à jour l'intervalle
+    clearInterval(moveBlockInterval);
+    moveBlockInterval = setInterval(moveBlockDown, 1000 / gameSettings.blockSpeed);
+  });
+
+  document.getElementById('sound').addEventListener('change', function() {
+    gameSettings.sound = this.checked;
+  });
+
+  document.getElementById('visual-effects').addEventListener('change', function() {
+    gameSettings.visualEffects = this.checked;
+  });
+
+  document.getElementById('language').addEventListener('change', function() {
+    gameSettings.language = this.value;
+  });
+
+  const menu = document.getElementById('menu');
+  const instructionsContainer = document.getElementById('instructions-container');
+  const scoreContainer = document.getElementById('score-container');
+  const optionsContainer = document.getElementById('options-container');
+  const scoreElement = document.getElementById('score');
+
+  const menuItems = document.querySelectorAll('.menu-item');
+  const containers = document.querySelectorAll('.container');
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', function() {
+      menuItems.forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+      
+      const targetContainer = document.getElementById(this.dataset.target);
+      
+      containers.forEach(container => container.style.display = 'none');
+      
+      targetContainer.style.display = 'block';
+    });
+  });
+
+  function showElement(buttonId, targetContainer, targetClass) {
+    document.getElementById(buttonId).addEventListener('click', function() {
+      targetContainer.classList.add(targetClass);
+      menu.style.display = 'none';
+      targetContainer.style.display = 'block';
+    });
+  }
+
+  function hideElement(buttonId, targetContainer, targetClass) {
+    document.getElementById(buttonId).addEventListener('click', function() {
+      targetContainer.classList.remove(targetClass);
+      targetContainer.style.display = 'none';
+      menu.style.display = 'flex';
+    });
+  }
+
+  showElement('instructions-button', instructionsContainer, 'instructions-started');
+  hideElement('close-instructions-button', instructionsContainer, 'instructions-started');
+  showElement('high-scores-button', scoreContainer, 'score-started');
+  hideElement('close-score-button', scoreContainer, 'score-started');
+  showElement('options-button', optionsContainer, 'options-started');
+  hideElement('close-options-button', optionsContainer, 'options-started');
+});
