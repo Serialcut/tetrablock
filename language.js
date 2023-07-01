@@ -5,7 +5,15 @@ let translations = {
     instructions: "Instructions",
     highScores: "High Scores",
     options: "Options",
-    // ... ajoutez toutes les autres traductions nécessaires ici ...
+    instructionsText: `Tetris: the game where blocks fall like autumn leaves. Stack them up to fill the lines and make them disappear. More lines = more points. If the blocks touch the top, it's game over! 😱
+
+    Controls:
+
+    Left arrow: move left.
+    Right arrow: move right.
+    Down arrow: quick fall.
+    Up arrow: block rotation.
+    Tip: Keep the blocks low for more chances to win. And above all, have fun! 😊`,
   },
   french: {
     greeting: "Bonjour, le monde!",
@@ -13,7 +21,15 @@ let translations = {
     instructions: "Instructions",
     highScores: "Meilleurs Scores",
     options: "Options",
-    // ... ajoutez toutes les autres traductions nécessaires ici ...
+    instructionsText: `Tetris : le jeu où les blocs tombent comme des feuilles d’automne. Empilez-les pour remplir les lignes et les faire disparaître. Plus de lignes = plus de points. Si les blocs touchent le haut, c'est game over! 😱
+
+    Commandes :
+
+    Flèche gauche : bouge à gauche.
+    Flèche droite : bouge à droite.
+    Flèche vers le bas : chute rapide.
+    Flèche vers le haut : rotation du bloc.
+    Astuce : Gardez les blocs en bas pour plus de chances de gagner. Et surtout, amusez-vous bien! 😊`,
   },
   spanish: {
     greeting: "¡Hola, mundo!",
@@ -21,34 +37,37 @@ let translations = {
     instructions: "Instrucciones",
     highScores: "Puntuaciones más altas",
     options: "Opciones",
-    // ... ajoutez toutes les autres traductions nécessaires ici ...
+    instructionsText: `Tetris: el juego donde los bloques caen como hojas de otoño. Apílalos para llenar las líneas y hacerlos desaparecer. Más líneas = más puntos. Si los bloques tocan la parte superior, ¡se acaba el juego! 😱
+
+    Controles:
+
+    Flecha izquierda: mover a la izquierda.
+    Flecha derecha: mover a la derecha.
+    Flecha hacia abajo: caída rápida.
+    Flecha hacia arriba: rotación del bloque.
+    Consejo: Mantén los bloques bajos para tener más posibilidades de ganar. Y sobre todo, ¡diviértete! 😊`,
   }
 };
 
-// La langue actuelle (peut être mise à jour par l'utilisateur dans les options)
 let currentLanguage = "french";
 
-// Fonction pour mettre à jour la langue du jeu
 function updateLanguage() {
-  // Obtenez la traduction pour la langue actuelle
   let translation = translations[currentLanguage];
 
-  // Mettez à jour le texte de chaque élément du jeu avec la traduction appropriée
   document.getElementById('start-button').textContent = translation.startGame;
+  document.getElementById('start-button').setAttribute('aria-label', translation.startGame);
   document.getElementById('instructions-button').textContent = translation.instructions;
+  document.getElementById('instructions-button').setAttribute('aria-label', translation.instructions);
   document.getElementById('high-scores-button').textContent = translation.highScores;
+  document.getElementById('high-scores-button').setAttribute('aria-label', translation.highScores);
   document.getElementById('options-button').textContent = translation.options;
-  // ... faites cela pour tous les autres éléments qui doivent être traduits ...
+  document.getElementById('options-button').setAttribute('aria-label', translation.options);
+  document.querySelector('#instructions-container p').innerHTML = translation.instructionsText;
 }
 
-// Écouteur d'événements pour mettre à jour la langue lorsque l'utilisateur change la langue dans les options
 document.getElementById('language').addEventListener('change', function() {
-  // Mettez à jour la langue actuelle
   currentLanguage = this.value;
-
-  // Mettez à jour la langue du jeu
   updateLanguage();
 });
 
-// Mettez à jour la langue du jeu lorsque la page se charge pour la première fois
 document.addEventListener('DOMContentLoaded', updateLanguage);
