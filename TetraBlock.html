@@ -17,22 +17,11 @@
   
   <div id="instructions-container" class="centered-container container">
     <h1>Instructions</h1>
-    <p>
-      <strong>Tetris :</strong> le jeu où les blocs tombent comme des feuilles d’automne. Empilez-les pour remplir les lignes et les faire disparaître. Plus de lignes = plus de points. Si les blocs touchent le haut, c'est game over! 😱
-      <br><br>
-      <strong>Commandes :</strong>
-      <ul>
-        <li>Flèche gauche : bouge à gauche.</li>
-        <li>Flèche droite : bouge à droite.</li>
-        <li>Flèche vers le bas : chute rapide.</li>
-        <li>Flèche vers le haut : rotation du bloc.</li>
-      </ul>
-      <strong>Astuce :</strong> Gardez les blocs en bas pour plus de chances de gagner. Et surtout, amusez-vous bien! 😊
-    </p>
+    <p></p>
     <button id="close-instructions-button">Fermer les instructions</button>
   </div>
 
-  <div id="score-container" class="centered-container container">
+<div id="score-container" class="centered-container container">
     <h1>Score</h1>
     <p id="score">0</p>
     <button id="close-score-button">Retour</button>
@@ -52,7 +41,7 @@
         </select>
     </div>
 
-    <div class="option">
+      <div class="option">
         <label for="ghost">Fantôme:</label>
         <input type="checkbox" id="ghost" name="ghost" checked>
     </div>
@@ -68,7 +57,7 @@
         </select>
     </div>
 
-    <div class="option">
+<div class="option">
         <label for="block-speed">Vitesse de chute des blocs :</label>
         <input type="range" id="block-speed" name="block-speed" min="1" max="10">
     </div>
@@ -110,6 +99,3 @@
 
 <script src="script.js"></script>
 <script src="language.js"></script>
-
-</body>
-</html>
