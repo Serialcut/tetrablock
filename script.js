@@ -142,10 +142,9 @@ function showGameOver() {
   context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
 }
 
-// On récupère le canvas et son contexte
-const canvas = document.getElementById('game-canvas');
-const context = canvas.getContext('2d');
-
+  const canvas = document.getElementById('game-canvas');
+  const context = canvas.getContext('2d');
+  
 // On définit la taille des cases et on prépare le terrain de jeu et la séquence de tétraminos
 const grid = 32;
 let tetrominoSequence = [];
@@ -439,49 +438,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('language').addEventListener('change', function() {
     gameSettings.language = this.value;
   });
-// Sélectionnez les éléments du DOM
-const eventCounterElement = document.getElementById('js-event-counter');
-const scoreElement = document.getElementById('js-score');
-const levelElement = document.getElementById('js-level');
-const tetrisElement = document.getElementById('js-tetris');
-const nextPieceElement = document.getElementById('js-next-piece');
 
-// Fonction pour mettre à jour le score
-function updateScore(newScore) {
-  scoreElement.textContent = newScore;
-}
+  
+var blockSpeedSelect = document.getElementById("block-speed");
+  var gridSelect = document.getElementById("grid");
 
-// Fonction pour mettre à jour le niveau
-function updateLevel(newLevel) {
-  levelElement.textContent = newLevel;
-}
+blockSpeedSelect.addEventListener("change", function() {
+  var selectedBlockSpeed = blockSpeedSelect.value;
+  console.log("Vitesse de chute des blocs sélectionnée : " + selectedBlockSpeed);
+});
 
-// Fonction pour mettre à jour le compteur d'événements
-function updateEventCounter(newCount) {
-  eventCounterElement.textContent = newCount;
-}
+gridSelect.addEventListener("change", function() {
+  var selectedGrid = gridSelect.value;
+  console.log("Grille sélectionnée : " + selectedGrid);
+});
+let menu = document.getElementById('menu');
+let menuItems = Array.from(menu.getElementsByClassName('menu-item'));
+let containers = Array.from(document.getElementsByClassName('container'));
 
-// Fonction pour afficher une pièce dans la prévisualisation
-function updateNextPiece(piece) {
-  // Ici, vous devez convertir votre pièce en une représentation HTML et la mettre à jour dans nextPieceElement.
-  // Cela dépend de la façon dont vous avez choisi de représenter une pièce.
-}
-
-// Et ainsi de suite pour les autres éléments...
-
-  const menu = document.getElementById('menu');
-  const instructionsContainer = document.getElementById('instructions-container');
-  const scoreContainer = document.getElementById('score-container');
-  const optionsContainer = document.getElementById('options-container');
-  const scoreElement = document.getElementById('score');
-
-  const menuItems = document.querySelectorAll('.menu-item');
-  const containers = document.querySelectorAll('.container');
-
-  menuItems.forEach(item => {
-    item.addEventListener('click', function() {
-      menuItems.forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
+menuItems.forEach(item => {
+  item.addEventListener('click', function() {
+    menuItems.forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
       
       const targetContainer = document.getElementById(this.dataset.target);
       
@@ -491,7 +469,8 @@ function updateNextPiece(piece) {
     });
   });
 
-  function showElement(buttonId, targetContainer, targetClass) {
+  function showElement(buttonId, targetContainerId, targetClass) {
+    let targetContainer = document.getElementById(targetContainerId);
     document.getElementById(buttonId).addEventListener('click', function() {
       targetContainer.classList.add(targetClass);
       menu.style.display = 'none';
@@ -499,7 +478,8 @@ function updateNextPiece(piece) {
     });
   }
 
-  function hideElement(buttonId, targetContainer, targetClass) {
+  function hideElement(buttonId, targetContainerId, targetClass) {
+    let targetContainer = document.getElementById(targetContainerId);
     document.getElementById(buttonId).addEventListener('click', function() {
       targetContainer.classList.remove(targetClass);
       targetContainer.style.display = 'none';
@@ -507,10 +487,10 @@ function updateNextPiece(piece) {
     });
   }
 
-  showElement('instructions-button', instructionsContainer, 'instructions-started');
-  hideElement('close-instructions-button', instructionsContainer, 'instructions-started');
-  showElement('high-scores-button', scoreContainer, 'score-started');
-  hideElement('close-score-button', scoreContainer, 'score-started');
-  showElement('options-button', optionsContainer, 'options-started');
-  hideElement('close-options-button', optionsContainer, 'options-started');
+  showElement('instructions-button', 'instructions-container', 'instructions-started');
+  hideElement('close-instructions-button', 'instructions-container', 'instructions-started');
+  showElement('high-scores-button', 'score-container', 'score-started');
+  hideElement('close-score-button', 'score-container', 'score-started');
+  showElement('options-button', 'options-container', 'options-started');
+  hideElement('close-options-button', 'options-container', 'options-started');
 });
