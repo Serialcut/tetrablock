@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +14,9 @@
     <button id="start-button" class="menu-item" data-target="game-container" aria-label="Start game">Commencer le Jeu</button>
     <button id="instructions-button" class="menu-item" data-target="instructions-container" aria-label="Instructions">Instructions</button>
     <button id="high-scores-button" class="menu-item" data-target="score-container" aria-label="High scores">Meilleurs Scores</button>
-	 <button id="options-button" class="menu-item" data-target="options-container" aria-label="Options">Options</button>
-	 <button id="restart-button">Redémarrer le jeu</button>
+	  <button id="options-button" class="menu-item" data-target="options-container" aria-label="Options">Options</button>
   </div>
-  <!-- La fenêtre modale -->
-  <div id="startModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>Êtes-vous prêt à commencer le jeu ?</p>
-      <button id="startGame">Commencer</button>
-    </div>
-  </div>
-
-<!-- Le bouton pour ouvrir la fenêtre modale -->
-<button id="openModal">Nouveau jeu</button>
-
+  
   <div id="instructions-container" class="centered-container container">
     <h1>Instructions</h1>
     <p></p>
@@ -100,7 +90,7 @@
   <div id="game-container" class="container">
     <canvas id="game-canvas" width="320" height="640"></canvas>
     <h1 id="title">BlockMaster</h1>
-	<div id="game-grid"></div>
+
     <div id="controls">
       <button id="deplacer-gauche">Déplacer à gauche</button>
       <button id="deplacer-droite">Déplacer à droite</button>
@@ -110,6 +100,5 @@
   </div>
 
 <script src="script.js"></script>
-<script src="language.js"></script>
-</body>
-</html>
+<script src="language.js"></script
+>
