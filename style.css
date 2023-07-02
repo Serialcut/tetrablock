@@ -1,6 +1,6 @@
 :root {
   --primary-color: #00008B80;
-  --secondary-color: #FFA500;
+  --secondary-color: #FFF;
   --highlight-color: #ADD8E680;
   --button-padding: 1em 2em;
 }
@@ -37,6 +37,16 @@ body {
   margin-bottom: 1em;
 }
 
+#menu button:hover,
+#menu-container button:hover,
+#score-container button:hover,
+#gameOptions button:hover,
+#options-container button:hover,
+#close-options-button:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
 #menu button {
   background-color: var(--secondary-color);
   color: var(--primary-color);
@@ -44,7 +54,6 @@ body {
   padding: var(--button-padding);
   margin: 0.5em 0;
   cursor: pointer;
-  padding: 0.5em 1em;
 }
 
 @media screen and (max-width: 768px) {
@@ -58,8 +67,9 @@ body {
     background-size: 50% 50%;
   }
 }
-
-#instructions-container {
+#instructions-container,
+#score-container,
+#game-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -71,25 +81,30 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Ajout d'une ombre pour un effet 3D */
 }
 
-#score-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 15px;
-  display: none;
-  justify-content: center;
-  align-items: center;
+#instructions-container button,
+#score-container button,
+#gameOptions button {
+  padding: var(--button-padding);
+  background-color: var(--highlight-color);
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 1em; /* Espacement supplémentaire au-dessus des boutons */
+}
+
+#instructions-container button:hover,
+#score-container button:hover,
+#gameOptions button:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 #score-container h1,
-#score-container div,
-#score-container button {
+#score-container div {
   margin-top: 20px;
 }
 
@@ -101,15 +116,6 @@ body {
 }
 
 #game-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--highlight-color);
-  border-radius: 15px;
-  display: none;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   margin: auto;
 }
@@ -135,7 +141,6 @@ body {
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-
 .option {
   margin-bottom: 20px;
   font-size: 1.2em;
@@ -157,13 +162,48 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
-  color: #000;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   padding: 20px;
   border-radius: 15px;
   display: none;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* ajout d'une ombre pour un effet 3D */
+}
+
+#options-container h1 {
+  margin-bottom: 1em;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+#options-container .option {
+  margin-bottom: 1em;
+}
+
+#options-container label {
+  color: var(--primary-color);
+}
+
+#options-container select, 
+#options-container input[type="checkbox"], 
+#options-container input[type="range"] {
+  margin-left: 1em;
+}
+
+#close-options-button {
+  padding: var(--button-padding);
+  background-color: var(--highlight-color);
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#close-options-button:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 #controls {
@@ -189,7 +229,7 @@ body {
 }
 
 #title {
-  position: absolute;
+  position: center;
   top: 0;
   left: 20%;
   transform: translateX(-50%);
