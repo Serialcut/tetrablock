@@ -494,3 +494,4 @@ menuItems.forEach(item => {
   showElement('options-button', 'options-container', 'options-started');
   hideElement('close-options-button', 'options-container', 'options-started');
 });
+
