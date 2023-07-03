@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
+
+</head>
+<body>
+  <div id="menu">
+    <h1>TetraBlock</h1>
+    <button id="start-button" class="menu-item" data-target="game-container" aria-label="Start game">Commencer le Jeu</button>
+    <button id="instructions-button" class="menu-item" data-target="instructions-container" aria-label="Instructions">Instructions</button>
+    <button id="high-scores-button" class="menu-item" data-target="score-container" aria-label="High scores">Meilleurs Scores</button>
+	  <button id="options-button" class="menu-item" data-target="options-container" aria-label="Options">Options</button>
+  </div>
+  
+  <div id="instructions-container" class="centered-container container">
+    <h1>Instructions</h1>
+    <p></p>
+    <button id="close-instructions-button">Fermer les instructions</button>
+  </div>
+
+<div id="score-container" class="centered-container container">
+    <h1>Score</h1>
+    <p id="score">0</p>
+    <button id="close-score-button">Retour</button>
+  </div>
+
+  <div id="options-container" class="centered-container container">
+    <h1>Options</h1>
+    
+    <div class="gameOptions">
+        <label for="grid">Grille:</label>
+        <select id="grid" name="grid">
+            <option value="none">Aucune</option>
+            <option value="standard">Standard</option>
+            <option value="partial">Partielle</option>
+            <option value="vertical">Verticale</option>
+            <option value="full">Pleine</option>
+        </select>
+    </div>
+
+      <div class="option">
+        <label for="ghost">Fantôme:</label>
+        <input type="checkbox" id="ghost" name="ghost" checked>
+    </div>
+
+    <div class="option">
+        <label for="theme-color">Couleur du Thème :</label>
+        <select id="theme-color" name="theme-color">
+            <option value="default">Par défaut</option>
+            <option value="blue">Bleu</option>
+            <option value="red">Rouge</option>
+            <option value="green">Vert</option>
+            <option value="purple">Violet</option>
+        </select>
+    </div>
+
+<div class="option">
+        <label for="block-speed">Vitesse de chute des blocs :</label>
+        <input type="range" id="block-speed" name="block-speed" min="1" max="10">
+    </div>
+
+    <div class="option">
+        <label for="sound">Son :</label>
+        <input type="checkbox" id="sound" name="sound" checked>
+    </div>
+
+    <div class="option">
+        <label for="visual-effects">Effets visuels :</label>
+        <input type="checkbox" id="visual-effects" name="visual-effects" checked>
+    </div>
+
+    <div class="option">
+        <label for="language">Langue :</label>
+        <select id="language" name="language">
+            <option value="french">Français</option>
+            <option value="english">Anglais</option>
+            <option value="spanish">Espagnol</option>
+            <!-- Ajoutez autant d'options de langue que nécessaire -->
+        </select>
+    </div>
+
+    <button id="close-options-button">Retour</button>
+  </div>
+
+  <div id="game-container" class="container">
+    <canvas id="game-canvas" width="320" height="640"></canvas>
+    <h1 id="title">BlockMaster</h1>
+
+    <div id="controls">
+      <button id="deplacer-gauche">Déplacer à gauche</button>
+      <button id="deplacer-droite">Déplacer à droite</button>
+      <button id="tourner-gauche">Tourner à gauche</button>
+      <button id="tourner-droite">Tourner à droite</button>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+<script src="language.js"></script
+</body>
+</html>
