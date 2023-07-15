@@ -4,26 +4,29 @@
   --white-color: #fff; /*couleur blanche par défaut*/
   --highlight-color: #add8e680; /* Utilisé pour les éléments d'interface à mettre en évidence */
   --button-padding: 1em 2em; /* Utilisé pour l'espacement intérieur des boutons */
+  --clr: #6eff3e
 }
-/* Définition des styles globaux */
+
 * {
-  /* Force tous les éléments à adopter le modèle de boîte border-box */
   box-sizing: border-box;
-  /* Applique une transition douce à toutes les propriétés modifiables */
   transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 /* Définition des styles de base pour le corps du document */
 body {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Poppins", sans-serif;
   overflow: hidden;
   width: 100%;
   min-height: 100%;
-  background-color: transparent !important;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 15px;
+  flex-direction: column;
+  gap: 60px;
 }
 
 /* Styles du menu principal */
@@ -38,7 +41,7 @@ body {
   /* Couleur de fond et de texte définies via variables CSS */
   background-color: #323840;
   max-width: 50%;
-  margin-top: 0 auto;
+  margin-top: 0;
   color: var(--secondary-color);
 }
 
@@ -49,52 +52,73 @@ body {
   /* Espace sous le titre */
   margin-bottom: 1em;
 }
-
 button {
-  --b: 3px; /* définit l'épaisseur de la bordure.*/
-  --s: 0.45em; /* définit la taille des coins du bouton */
-  --color: #373b44; /*définit la couleur du texte et la couleur de la bordure au survol.*/
-
-  padding: calc(0.5em + var(--s)) calc(0.9em + var(--s));
-  color: var(--color);
-  --_p: var(--s);
-  background: conic-gradient(
-      from 90deg at var(--b) var(--b),
-      #0000 90deg,
-      var(--color) 0
-    )
-    var(--_p) var(--_p) / calc(100% - var(--b) - 2 * var(--_p))
-    calc(100% - var(--b) - 2 * var(--_p));
-  transition: 0.3s linear, color 0s, background-color 0s;
-  outline: var(--b) solid #0000;
-  outline-offset: 0.6em;
-  font-size: 18px; /* Augmente la taille de la police pour la rendre plus lisible sur les grands boutons */
-  margin: 10px 5px; /* Augmente la marge autour des boutons pour éviter qu'ils ne se touchent */
-  cursor: pointer; /* Change le curseur de la souris */
-  border: none; /* Supprime la bordure */
-  border-radius: 10px; /* Arrondit les bordures */
-  text-align: center; /* Centre le texte */
-  display: inline-block;
-  user-select: none;
-  -webkit-user-select: none;
+  position: relative;
+  background: transparency;
+  color: var (--clr);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  padding: 10px 30px;
+  transition: 0.5s;
+}
+button:hover {
+  letter-spacing: 0.25em;
+  background: var(--clr);
+  color: var(--clr);
+  box-shadow: 0 0 35px var(--clr);
+}
+button::before {
+  position: absolute;
+  inset: 2px;
+}
+button span {
+  position: relative;
+  z-index: 1;
+}
+button i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+button i::before {
+  position: absolute;
+  top: -3.5px;
+  left: 80%;
+  width: 10px;
+  height: 5px;
+  border: 2px solid var(--clr);
+  transform: translateX(-50%);
+  transition: 0.5s;
 }
 
-button:hover,
-button:focus-visible {
-  --_p: 0px;
-  outline-color: var(--white-color);
-  outline-offset: 0.05em;
+button:hover i::before {
+  width: 20px;
+  left: 20%;
 }
 
-button:active {
-  background: var(--white-color);
-  color: #fff;
+button i::after {
+  position: absolute;
+  bottom: -3.5px;
+  top: -3.5px;
+  left: 20%;
+  width: 10px;
+  height: 5px;
+  border: 2px solid var(--clr);
+  transform: translateX(-50%);
+  transition: 0.5s;
+}
+
+button:hover i::after {
+  width: 20px;
+  left: 80%;
 }
 
 /* Styles du conteneur des instructions */
 #instructions-container {
   /* Positionnement absolu et centré */
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -115,7 +139,7 @@ button:active {
 /* Styles du conteneur de score */
 
 #score-container {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -149,7 +173,7 @@ button:active {
 /* Styles du conteneur du jeu */
 #game-container {
   /* Positionnement absolu et centré */
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -157,6 +181,8 @@ button:active {
   background-color: var(--highlight-color);
   /* Arrondissement des coins */
   border-radius: 15px;
+  /* Ajout de la bordure bleue */
+  border: 5px solid var(--primary-color);
   /* Par défaut, le conteneur n'est pas visible */
   display: none;
   /* Centrage du contenu */
@@ -181,6 +207,33 @@ button:active {
   /* Couleur de fond du canvas */
   background-color: #0d0d0d;
 }
+.frame {
+  color: #fff;
+  padding: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 15px;
+  position: fixed;
+}
+
+#score-frame {
+  position: fixed;
+  top: 10px; /* Modifier en fonction des besoins */
+  left: 10px; /* Modifier en fonction des besoins */
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+#time-frame {
+  position: fixed;
+  top: 10px; /* Modifier en fonction des besoins */
+  right: 10px; /* Modifier en fonction des besoins */
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 20px;
+  border-radius: 15px;
+}
 
 /* Styles du conteneur des options du jeu */
 #gameOptions {
@@ -198,7 +251,7 @@ button:active {
   border-radius: 5px;
   /* Espacement intérieur et ombre portée */
   padding: 10px;
-  box-shadow: 0px 0px 10px rgba(00000080);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Styles des éléments d'options */
@@ -232,7 +285,7 @@ button:active {
 #options-container {
   /* Centrage du texte et positionnement absolu */
   text-align: center;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -252,7 +305,7 @@ button:active {
 /* Styles des contrôles du jeu */
 #controls {
   /* Positionnement absolu et centrage horizontal */
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -266,7 +319,7 @@ button:active {
 /* Styles du score */
 #score {
   /* Positionnement absolu et centrage horizontal */
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 25%;
   transform: translateX(-50%);
@@ -282,7 +335,7 @@ button:active {
 /* Styles du titre */
 #title {
   /* Positionnement absolu et centrage horizontal */
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 20%;
   transform: translateX(-50%);
@@ -350,8 +403,6 @@ button:active {
   opacity: 1;
   /* Padding autour du contenu pour l'espace intérieur */
   padding: 0px 0px;
-  /* Espace au-dessus pour séparer de tout contenu précédent */
-  margin-top: 2em;
   /* Arrondit les coins */
   border-radius: 10px;
   /* Couleur d'arrière-plan définie par une variable CSS */
@@ -406,7 +457,6 @@ button:active {
   background: linear-gradient(45deg, orange, darkorange);
 }
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -415,6 +465,9 @@ button:active {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content {
@@ -424,10 +477,7 @@ button:active {
   justify-content: center;
   background-color: #323840;
   max-width: 50%;
-  margin-top: 0 auto;
   color: var(--secondary-color);
-}
-.modal-content h2 {
-  font-size: 2em;
-  margin-bottom: 1em;
+  padding: 20px;
+  border-radius: 15px;
 }
