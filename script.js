@@ -120,7 +120,9 @@ function placeTetromino() {
     if (playfield[row].every((cell) => !!cell)) {
       // Si une ligne est complète, on augmente le score et on déplace toutes les lignes du dessus vers le bas
       score++;
+      document.getElementById("score-content").textContent = score;
       lines++;
+      document.getElementById("time-content").textContent = lines;
       for (let r = row; r >= 0; r--) {
         for (let c = 0; c < playfield[r].length; c++) {
           playfield[r][c] = playfield[r - 1][c];
@@ -284,13 +286,6 @@ function loop() {
     }
   }
 
-  // On affiche le score et les lignes complétées
-  context.fillStyle = "white";
-  context.font = '12px "Press Start 2P"';
-  context.textAlign = "right";
-  context.fillText("Score: " + score, canvas.width - 10, 20);
-  context.fillText("Lignes: " + lines, canvas.width - 10, 40);
-
   // On dessine les tétraminos déjà placés sur le terrain de jeu
   for (let row = 0; row < 20; row++) {
     for (let col = 0; col < 10; col++) {
@@ -336,8 +331,8 @@ document.addEventListener("keydown", function (e) {
   if (gameOver) return;
 
   // Gauche et droite
-  if (e.which === 37 || e.which === 39) {
-    const col = e.which === 37 ? tetromino.col - 1 : tetromino.col + 1;
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+    const col = e.key === "ArrowLeft" ? tetromino.col - 1 : tetromino.col + 1;
 
     if (isValidMove(tetromino.matrix, tetromino.row, col)) {
       tetromino.col = col;
@@ -345,7 +340,7 @@ document.addEventListener("keydown", function (e) {
   }
 
   // Haut (rotation)
-  if (e.which === 38) {
+  if (e.key === "ArrowUp") {
     const matrix = rotate(tetromino.matrix);
     if (isValidMove(matrix, tetromino.row, tetromino.col)) {
       tetromino.matrix = matrix;
@@ -353,7 +348,7 @@ document.addEventListener("keydown", function (e) {
   }
 
   // Bas (accélère la descente)
-  if (e.which === 40) {
+  if (e.key === "ArrowDown") {
     const row = tetromino.row + 1;
 
     if (!isValidMove(tetromino.matrix, row, tetromino.col)) {
@@ -447,7 +442,7 @@ document.getElementById("start-button").addEventListener("click", function () {
 
   rAF = requestAnimationFrame(loop);
 });
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", () => {
   let gameSettings = {
     grid: "standard",
     ghost: true,
@@ -511,18 +506,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
     gameSettings.language = this.value;
   });
 
-  var blockSpeedSelect = document.getElementById("block-speed");
-  var gridSelect = document.getElementById("grid");
+  let blockSpeedSelect = document.getElementById("block-speed");
+  let gridSelect = document.getElementById("grid");
 
   blockSpeedSelect.addEventListener("change", function () {
-    var selectedBlockSpeed = blockSpeedSelect.value;
+    let selectedBlockSpeed = blockSpeedSelect.value;
     console.log(
       "Vitesse de chute des blocs sélectionnée : " + selectedBlockSpeed
     );
   });
 
   gridSelect.addEventListener("change", function () {
-    var selectedGrid = gridSelect.value;
+    let selectedGrid = gridSelect.value;
     console.log("Grille sélectionnée : " + selectedGrid);
   });
   let menu = document.getElementById("menu");
@@ -575,14 +570,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
   showElement("options-button", "options-container", "options-started");
   hideElement("close-options-button", "options-container", "options-started");
 
-  var menuMusic = document.getElementById("menu-music");
+  let menuMusic = document.getElementById("menu-music");
 
   menuMusic.play();
 
   menuMusic.pause();
   menuMusic.currentTime = 0;
 
-  var soundCheckbox = document.getElementById("sound");
+  let soundCheckbox = document.getElementById("sound");
 
   soundCheckbox.addEventListener("change", function () {
     console.log("Checkbox state changed: ", this.checked); // Ajout de cette ligne pour le débogage
@@ -596,7 +591,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   // Récupérer la référence de la fenêtre modale et du bouton de démarrage
   const modal = document.getElementById("modal");
-  const playButton = document.getElementById("play-button");
 
   // Fonctions pour chaque action du menu
   function startGame() {
@@ -652,8 +646,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 const backButtons = document.getElementsByClassName("back-button");
 
 // Parcourir tous les boutons de retour et ajouter un gestionnaire d'événement
-for (let i = 0; i < backButtons.length; i++) {
-  backButtons[i].addEventListener("click", showMainMenu);
+for (const element of backButtons) {
+  element.addEventListener("click", showMainMenu);
 }
 
 // Fonction pour afficher le menu principal
@@ -663,14 +657,13 @@ function showMainMenu() {
   document.getElementById("score-container").style.display = "none";
   document.getElementById("options-container").style.display = "none";
   // Afficher la fenêtre modale
-  modal.style.display = "block";
+  modal.style.display = "flex";
 }
 
 // Récupérer le bouton "Retour" dans chaque menu
-var menuBackButton = document.getElementById("menu-back-button");
-
-// Récupérer la fenêtre modale
-var modal = document.getElementById("modal");
+let menuBackButton = document.getElementById("menu-back-button");
 
 // Ajouter un événement de clic au bouton "Retour" dans chaque menu
-menuBackButton.addEventListener("click", function () {});
+menuBackButton.addEventListener("click", function () {
+  showMainMenu();
+});
