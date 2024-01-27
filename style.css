@@ -2,9 +2,9 @@
   --primary-color: #00008b80; /* Utilisé pour le texte principal et les éléments d'interface */
   --secondary-color: #fff; /* Utilisé pour les arrière-plans */
   --white-color: #fff; /*couleur blanche par défaut*/
-  --highlight-color: #add8e680; /* Utilisé pour les éléments d'interface à mettre en évidence */
-  --button-padding: 1em 2em; /* Utilisé pour l'espacement intérieur des boutons */
-  --clr: #6eff3e
+  --highlight-color: #000; /* Utilisé pour les éléments d'interface à mettre en évidence */
+  --button-padding: 1em 1em; /* Utilisé pour l'espacement intérieur des boutons */
+  --clr: #5A65F1;
 }
 
 * {
@@ -12,6 +12,7 @@
   transition: all 0.3s ease;
   font-family: "Poppins", sans-serif;
 }
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 /* Définition des styles de base pour le corps du document */
@@ -52,67 +53,26 @@ body {
   /* Espace sous le titre */
   margin-bottom: 1em;
 }
-button {
-  position: relative;
-  background: transparency;
-  color: var (--clr);
-  text-decoration: none;
+
+/* Styles des boutons du menu principal */
+#menu button {
+  /* Taille identique à celle du menu d'instructions */
+  padding: var(--button-padding);
   text-transform: uppercase;
   font-size: 1em;
   letter-spacing: 0.1em;
-  padding: 10px 30px;
+  position: relative;
+  background: transparent;
+  color: var(--clr);
+  text-decoration: none;
   transition: 0.5s;
 }
-button:hover {
-  letter-spacing: 0.25em;
-  background: var(--clr);
+
+/* Styles des boutons du menu principal au survol */
+#menu button:hover {
+  background: transparent; /* Modification ici pour conserver la couleur de fond transparente */
   color: var(--clr);
   box-shadow: 0 0 35px var(--clr);
-}
-button::before {
-  position: absolute;
-  inset: 2px;
-}
-button span {
-  position: relative;
-  z-index: 1;
-}
-button i {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-button i::before {
-  position: absolute;
-  top: -3.5px;
-  left: 80%;
-  width: 10px;
-  height: 5px;
-  border: 2px solid var(--clr);
-  transform: translateX(-50%);
-  transition: 0.5s;
-}
-
-button:hover i::before {
-  width: 20px;
-  left: 20%;
-}
-
-button i::after {
-  position: absolute;
-  bottom: -3.5px;
-  top: -3.5px;
-  left: 20%;
-  width: 10px;
-  height: 5px;
-  border: 2px solid var(--clr);
-  transform: translateX(-50%);
-  transition: 0.5s;
-}
-
-button:hover i::after {
-  width: 20px;
-  left: 80%;
 }
 
 /* Styles du conteneur des instructions */
@@ -180,7 +140,7 @@ button:hover i::after {
   /* Styles de fond */
   background-color: var(--highlight-color);
   /* Arrondissement des coins */
-  border-radius: 15px;
+  border-radius: 5px;
   /* Ajout de la bordure bleue */
   border: 5px solid var(--primary-color);
   /* Par défaut, le conteneur n'est pas visible */
@@ -205,7 +165,7 @@ button:hover i::after {
   /* Par défaut, le canvas du jeu est caché */
   display: none;
   /* Couleur de fond du canvas */
-  background-color: #0d0d0d;
+  background-color: #1f2489;
 }
 .frame {
   color: #fff;
@@ -218,9 +178,8 @@ button:hover i::after {
 #score-frame {
   position: fixed;
   top: 10px; /* Modifier en fonction des besoins */
-  left: 10px; /* Modifier en fonction des besoins */
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+  left: -115px; /* Modifier en fonction des besoins */
+  color: var(--secondary-color);
   padding: 20px;
   border-radius: 15px;
 }
@@ -228,9 +187,8 @@ button:hover i::after {
 #time-frame {
   position: fixed;
   top: 10px; /* Modifier en fonction des besoins */
-  right: 10px; /* Modifier en fonction des besoins */
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+  right: -123px; /* Modifier en fonction des besoins */
+  color: var(--secondary-color);
   padding: 20px;
   border-radius: 15px;
 }
@@ -304,17 +262,36 @@ button:hover i::after {
 
 /* Styles des contrôles du jeu */
 #controls {
-  /* Positionnement absolu et centrage horizontal */
   position: fixed;
-  bottom: 0;
+  bottom: 10px; /* Ajustement pour aligner avec le bas de la page */
   left: 50%;
   transform: translateX(-50%);
-  /* Affichage en flex avec espacement autour */
   display: flex;
   justify-content: space-around;
-  /* Largeur complète */
-  width: 100%;
+  width: 80%; /* Ajustement pour une meilleure répartition sur la largeur */
+  padding: 10px 0; /* Ajout d'un peu de padding vertical */
+  border-radius: 10px; /* Bords arrondis pour correspondre aux autres boutons */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée pour un effet de profondeur */
 }
+
+#controls button {
+  padding: var(--button-padding);
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  background: transparent;
+  color: var(--clr); /* Utilisation de la couleur personnalisée pour la cohérence */
+  border: 2px solid var(--clr); /* Bordure pour distinguer les boutons */
+  border-radius: 5px; /* Bords arrondis */
+  cursor: pointer; /* Curseur en forme de main pour indiquer l'interactivité */
+  transition: background-color 0.3s, color 0.3s; /* Transition douce pour le survol */
+}
+
+#controls button:hover {
+  background-color: var(--clr); /* Changement de fond au survol */
+  color: var(--secondary-color); /* Changement de couleur du texte au survol */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Ombre portée plus prononcée au survol */
+}
+
 
 /* Styles du score */
 #score {
