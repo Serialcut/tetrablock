@@ -1,483 +1,164 @@
-:root {
-  --primary-color: #00008b80; /* Utilisé pour le texte principal et les éléments d'interface */
-  --secondary-color: #fff; /* Utilisé pour les arrière-plans */
-  --white-color: #fff; /*couleur blanche par défaut*/
-  --highlight-color: #add8e680; /* Utilisé pour les éléments d'interface à mettre en évidence */
-  --button-padding: 1em 2em; /* Utilisé pour l'espacement intérieur des boutons */
-  --clr: #6eff3e
+"use strict";
+/* jshint browser: true */
+
+let translations = {
+  english: {
+    greeting: "Hello, world!",
+    startGame: "Start Game",
+    instructions: "Instructions",
+    highScores: "High Scores",
+    options: "Options",
+    grid: "Grid:",
+    none: "None",
+    standard: "Standard",
+    partial: "Partial",
+    vertical: "Vertical",
+    full: "Full",
+    ghost: "Ghost:",
+    themeColor: "Theme Color:",
+    default: "Default",
+    blue: "Blue",
+    red: "Red",
+    green: "Green",
+    purple: "Purple",
+    fallSpeed: "Block Fall Speed:",
+    sound: "Sound:",
+    visualEffects: "Visual Effects:",
+    language: "Language:",
+    french: "French",
+    english: "English",
+    spanish: "Spanish",
+    close: "Back",
+    instructionsText:
+      "Tetris: the game where blocks fall like autumn leaves. Stack them up to fill the lines and make them disappear. More lines = more points. If the blocks touch the top, it's game over! 😱",
+    controls:
+      "Controls:\n" +
+      "Left arrow: move left.\n" +
+      "Right arrow: move right.\n" +
+      "Down arrow: quick fall.\n" +
+      "Up arrow: block rotation.\n" +
+      "Tip: Keep the blocks low for more chances to win. And above all, have fun! 😊",
+  },
+  french: {
+    greeting: "Bonjour, le monde !",
+    startGame: "Commencer le jeu",
+    instructions: "Instructions",
+    highScores: "Meilleurs scores",
+    options: "Options",
+    grid: "Grille :",
+    none: "Aucun",
+    standard: "Standard",
+    partial: "Partielle",
+    vertical: "Verticale",
+    full: "Pleine",
+    ghost: "Fantôme :",
+    themeColor: "Couleur du thème :",
+    default: "Par défaut",
+    blue: "Bleu",
+    red: "Rouge",
+    green: "Vert",
+    purple: "Violet",
+    fallSpeed: "Vitesse de chute des blocs :",
+    sound: "Son :",
+    visualEffects: "Effets visuels :",
+    language: "Langue :",
+    french: "Français",
+    english: "Anglais",
+    spanish: "Espagnol",
+    close: "Retour",
+    instructionsText:
+      "Tetris : le jeu où les blocs tombent comme des feuilles d'automne. Empilez-les pour remplir les lignes et les faire disparaître. Plus de lignes = plus de points. Si les blocs touchent le haut, c'est game over ! 😱",
+    controls:
+      "Contrôles :\n" +
+      "Flèche gauche : déplacer à gauche.\n" +
+      "Flèche droite : déplacer à droite.\n" +
+      "Flèche vers le bas : chute rapide.\n" +
+      "Flèche vers le haut : rotation du bloc.\n" +
+      "Astuce : Gardez les blocs en bas pour avoir plus de chances de gagner. Et surtout, amusez-vous bien ! 😊",
+  },
+  spanish: {
+    greeting: "¡Hola, mundo!",
+    startGame: "Comenzar el juego",
+    instructions: "Instrucciones",
+    highScores: "Las mejores puntuaciones",
+    options: "Opciones",
+    grid: "Rejilla:",
+    none: "Ninguno",
+    standard: "Estándar",
+    partial: "Parcial",
+    vertical: "Vertical",
+    full: "Completa",
+    ghost: "Fantasma:",
+    themeColor: "Color de tema:",
+    default: "Por defecto",
+    blue: "Azul",
+    red: "Rojo",
+    green: "Verde",
+    purple: "Morado",
+    fallSpeed: "Velocidad de caída de los bloques:",
+    sound: "Sonido:",
+    visualEffects: "Efectos visuales:",
+    language: "Idioma:",
+    french: "Francés",
+    english: "Inglés",
+    spanish: "Español",
+    close: "Volver",
+    instructionsText:
+      "Tetris: el juego donde los bloques caen como hojas de otoño. Apílalos para llenar las líneas y hacerlas desaparecer. Más líneas = más puntos. Si los bloques tocan la parte superior, ¡es el fin del juego! 😱",
+    controls:
+      "Controles:\n" +
+      "Flecha izquierda: mover a la izquierda.\n" +
+      "Flecha derecha: mover a la derecha.\n" +
+      "Flecha hacia abajo: caída rápida.\n" +
+      "Flecha hacia arriba: rotación del bloque.\n" +
+      "Consejo: Mantén los bloques bajos para tener más oportunidades de ganar. Y sobre todo, ¡diviértete! 😊",
+  },
+};
+
+let currentLanguage = "french";
+
+function updateLanguage() {
+  let translation = translations[currentLanguage];
+
+  document.getElementById("start-button").textContent = translation.startGame;
+  document
+    .getElementById("start-button")
+    .setAttribute("aria-label", translation.startGame);
+  document.getElementById("instructions-button").textContent =
+    translation.instructions;
+  document
+    .getElementById("instructions-button")
+    .setAttribute("aria-label", translation.instructions);
+  document.getElementById("high-scores-button").textContent =
+    translation.highScores;
+  document
+    .getElementById("high-scores-button")
+    .setAttribute("aria-label", translation.highScores);
+  document.getElementById("options-button").textContent = translation.options;
+  document
+    .getElementById("options-button")
+    .setAttribute("aria-label", translation.options);
+  document.querySelector("#instructions-text").innerHTML =
+    translation.instructionsText;
+  document.querySelector('label[for="grid"]').textContent = translation.grid;
+  document.querySelector('option[value="none"]').textContent = translation.none;
+  document.querySelector('label[for="ghost"]').textContent = translation.ghost;
+  document.querySelector('label[for="theme-color"]').textContent =
+    translation.themeColor;
+  document.querySelector('option[value="default"]').textContent =
+    translation.default;
+  document.querySelector('label[for="block-speed"]').textContent =
+    translation.fallSpeed;
+  document.querySelector('label[for="sound"]').textContent = translation.sound;
+  document.querySelector('label[for="visual-effects"]').textContent =
+    translation.visualEffects;
+  document.querySelector('label[for="language"]').textContent =
+    translation.language;
 }
 
-* {
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-  font-family: "Poppins", sans-serif;
-}
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+document.getElementById("language").addEventListener("change", function () {
+  currentLanguage = this.value;
+  updateLanguage();
+});
 
-/* Définition des styles de base pour le corps du document */
-body {
-  font-family: "Poppins", sans-serif;
-  overflow: hidden;
-  width: 100%;
-  min-height: 100%;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 15px;
-  flex-direction: column;
-  gap: 60px;
-}
-
-/* Styles du menu principal */
-#menu {
-  /* Affichage des éléments en colonne et centrés */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* Hauteur fixée à 100vh pour occuper tout l'écran */
-  height: 100%;
-  /* Couleur de fond et de texte définies via variables CSS */
-  background-color: #323840;
-  max-width: 50%;
-  margin-top: 0;
-  color: var(--secondary-color);
-}
-
-/* Styles du titre du menu */
-#menu h1 {
-  /* Taille du texte définie en em pour être relative à la taille du texte de base */
-  font-size: 2em;
-  /* Espace sous le titre */
-  margin-bottom: 1em;
-}
-button {
-  position: relative;
-  background: transparency;
-  color: var (--clr);
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1em;
-  letter-spacing: 0.1em;
-  padding: 10px 30px;
-  transition: 0.5s;
-}
-button:hover {
-  letter-spacing: 0.25em;
-  background: var(--clr);
-  color: var(--clr);
-  box-shadow: 0 0 35px var(--clr);
-}
-button::before {
-  position: absolute;
-  inset: 2px;
-}
-button span {
-  position: relative;
-  z-index: 1;
-}
-button i {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-button i::before {
-  position: absolute;
-  top: -3.5px;
-  left: 80%;
-  width: 10px;
-  height: 5px;
-  border: 2px solid var(--clr);
-  transform: translateX(-50%);
-  transition: 0.5s;
-}
-
-button:hover i::before {
-  width: 20px;
-  left: 20%;
-}
-
-button i::after {
-  position: absolute;
-  bottom: -3.5px;
-  top: -3.5px;
-  left: 20%;
-  width: 10px;
-  height: 5px;
-  border: 2px solid var(--clr);
-  transform: translateX(-50%);
-  transition: 0.5s;
-}
-
-button:hover i::after {
-  width: 20px;
-  left: 80%;
-}
-
-/* Styles du conteneur des instructions */
-#instructions-container {
-  /* Positionnement absolu et centré */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Styles de fond et de couleur du texte */
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  /* Espacement intérieur */
-  padding: 20px;
-  /* Arrondissement des coins */
-  border-radius: 15px;
-  /* Par défaut, le conteneur n'est pas visible */
-  display: none;
-  /* Centrage du contenu */
-  justify-content: center;
-  align-items: center;
-}
-
-/* Styles du conteneur de score */
-
-#score-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 20px;
-  border-radius: 15px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Espacement au-dessus des éléments du conteneur de score */
-#score-container h1,
-#score-container div,
-#score-container button {
-  margin-top: 20px;
-}
-
-/* Styles du jeu lui-même */
-#game {
-  /* Couleur de fond et bordure */
-  background: var(--secondary-color-color);
-  border: 1px solid var(--secondary-color);
-  /* Centrage du jeu */
-  margin: auto;
-  /* Affichage en bloc pour permettre l'application des marges automatiques */
-  display: flex;
-}
-
-/* Styles du conteneur du jeu */
-#game-container {
-  /* Positionnement absolu et centré */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Styles de fond */
-  background-color: var(--highlight-color);
-  /* Arrondissement des coins */
-  border-radius: 15px;
-  /* Ajout de la bordure bleue */
-  border: 5px solid var(--primary-color);
-  /* Par défaut, le conteneur n'est pas visible */
-  display: none;
-  /* Centrage du contenu */
-  justify-content: center;
-  align-items: center;
-  /* Hauteur minimale pour remplir la fenêtre de visualisation */
-  min-height: 100vh;
-  /* Centrage du conteneur */
-  margin: auto;
-}
-
-/* Modification du style du conteneur de jeu lorsque la classe .game-started est ajoutée */
-#game-container.game-started {
-  /* Le conteneur est rendu visible et son contenu est affiché en flex */
-  display: flex;
-}
-
-/* Styles du canvas du jeu */
-#game-canvas {
-  /* Par défaut, le canvas du jeu est caché */
-  display: none;
-  /* Couleur de fond du canvas */
-  background-color: #0d0d0d;
-}
-.frame {
-  color: #fff;
-  padding: 20px;
-  border: 2px solid var(--primary-color);
-  border-radius: 15px;
-  position: fixed;
-}
-
-#score-frame {
-  position: fixed;
-  top: 10px; /* Modifier en fonction des besoins */
-  left: 10px; /* Modifier en fonction des besoins */
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 20px;
-  border-radius: 15px;
-}
-
-#time-frame {
-  position: fixed;
-  top: 10px; /* Modifier en fonction des besoins */
-  right: 10px; /* Modifier en fonction des besoins */
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 20px;
-  border-radius: 15px;
-}
-
-/* Styles du conteneur des options du jeu */
-#gameOptions {
-  /* Espacement au-dessus et styles de flexbox */
-  margin: 20px auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  /* Largeur fixe et centrage */
-  width: 300px;
-  /* Styles de fond et de bordure */
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  /* Espacement intérieur et ombre portée */
-  padding: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Styles des éléments d'options */
-.option {
-  /* Espacement vertical */
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* Taille de la police relative */
-  font-size: 1.2em;
-}
-
-/* Styles des labels dans .option et #gameOptions */
-.option label,
-#gameOptions label {
-  font-size: 1.2em;
-  /* Espacement à droite et couleur du texte */
-  /* L'importance est forcé pour s'assurer que ce style s'applique */
-  margin-right: 10px;
-  color: var(--primary-color) !important;
-}
-
-/* Styles des select et des checkbox dans .option */
-.option select,
-.option input[type="checkbox"] {
-  /* Taille de la police relative et espacement intérieur */
-  font-size: 1em;
-  padding: 5px;
-}
-
-/* Styles du conteneur d'options */
-#options-container {
-  /* Centrage du texte et positionnement absolu */
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Styles de fond et de couleur du texte */
-  background-color: #fff;
-  color: var(--primary-color);
-  /* Espacement intérieur et arrondissement des coins */
-  padding: 20px;
-  border-radius: 15px;
-  /* Par défaut, le conteneur n'est pas visible */
-  display: none;
-  /* Centrage du contenu */
-  justify-content: center;
-  align-items: center;
-}
-
-/* Styles des contrôles du jeu */
-#controls {
-  /* Positionnement absolu et centrage horizontal */
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  /* Affichage en flex avec espacement autour */
-  display: flex;
-  justify-content: space-around;
-  /* Largeur complète */
-  width: 100%;
-}
-
-/* Styles du score */
-#score {
-  /* Positionnement absolu et centrage horizontal */
-  position: fixed;
-  top: 50px;
-  left: 25%;
-  transform: translateX(-50%);
-  /* Couleur du texte, taille de la police et poids de la police */
-  color: var(--primary-color);
-  font-size: 20px;
-  font-weight: bold;
-  /* Espacement intérieur et arrondissement des coins */
-  padding: 20px;
-  border-radius: 3px;
-}
-
-/* Styles du titre */
-#title {
-  /* Positionnement absolu et centrage horizontal */
-  position: fixed;
-  top: 0;
-  left: 20%;
-  transform: translateX(-50%);
-  /* Couleur du texte, taille de la police et poids de la police */
-  color: var(--primary-color);
-  font-size: 15px;
-  font-weight: bold;
-  /* Bordure et espacement intérieur */
-  border: 2px solid var(--primary-color); /* Ajout du cadre */
-  padding: 10px; /* Espacement entre le texte et le cadre */
-  /* Couleur de fond et arrondissement des coins */
-  background-color: var(--secondary-color); /* Couleur de fond du cadre */
-  border-radius: 10px; /* Bords arrondis du cadre */
-}
-
-/* Ajustement de la taille du titre dans le menu pour les écrans plus petits que 768px */
-@media screen and (max-width: 768px) {
-  #menu h1 {
-    font-size: 1.5em;
-  }
-}
-
-/* Ajustement du fond pour les écrans plus petits que 480px */
-@media screen and (max-width: 480px) {
-  body {
-    /* Le fond occupe tout l'écran */
-    background-size: 100% 100%;
-  }
-}
-
-/* Suppression des transitions pour les utilisateurs qui préfèrent réduire le mouvement */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    /* Suppression de toutes les transitions */
-    transition: none !important;
-  }
-}
-
-/* Modification du fond et du padding du menu pour les écrans plus larges que 1080px et plus hauts que 2408px */
-@media screen and (min-width: 1080px) and (max-height: 2408px) {
-  body {
-    /* Changement de la couleur de fond */
-    background-color: #323840;
-  }
-
-  #menu {
-    /* Ajout d'un padding au menu */
-    padding: 10px;
-  }
-}
-
-.particle-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-#particles-js {
-  /* Inclut le padding et la bordure dans la taille totale */
-  box-sizing: border-box;
-  /* Opacité de l'élément à 50% */
-  opacity: 1;
-  /* Padding autour du contenu pour l'espace intérieur */
-  padding: 0px 0px;
-  /* Arrondit les coins */
-  border-radius: 10px;
-  /* Couleur d'arrière-plan définie par une variable CSS */
-  background-color: #323840;
-  /* Positionnement relatif pour le conteneur */
-  position: absolute;
-  z-index: -1; /* place cet élément derrière tous les autres éléments dont le z-index est supérieur ou égal à 0 */
-  width: 100%; /* La largeur est définie sur 100% de la largeur du conteneur parent */
-  height: 100%; /* La hauteur est définie sur 100% de la hauteur du conteneur parent */
-  top: 0;
-  left: 0;
-}
-
-.block {
-  /* styles généraux pour tous les blocs */
-  border: 1px solid #000;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.i {
-  /* styles spécifiques pour le Tetramino I */
-  background: linear-gradient(45deg, cyan, darkcyan);
-}
-
-.o {
-  /* styles spécifiques pour le Tetramino O */
-  background: linear-gradient(45deg, yellow, gold);
-}
-
-.t {
-  /* styles spécifiques pour le Tetramino T */
-  background: linear-gradient(45deg, purple, darkblue);
-}
-
-.s {
-  /* styles spécifiques pour le Tetramino S */
-  background: linear-gradient(45deg, green, darkgreen);
-}
-
-.z {
-  /* styles spécifiques pour le Tetramino Z */
-  background: linear-gradient(45deg, red, darkred);
-}
-
-.j {
-  /* styles spécifiques pour le Tetramino J */
-  background: linear-gradient(45deg, blue, darkblue);
-}
-
-.l {
-  /* styles spécifiques pour le Tetramino L */
-  background: linear-gradient(45deg, orange, darkorange);
-}
-.modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #323840;
-  max-width: 50%;
-  color: var(--secondary-color);
-  padding: 20px;
-  border-radius: 15px;
-}
+document.addEventListener("DOMContentLoaded", updateLanguage);
