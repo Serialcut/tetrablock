@@ -32,18 +32,18 @@ body {
 
 /* Styles du menu principal */
 #menu {
-  /* Affichage des éléments en colonne et centrés */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Hauteur fixée à 100vh pour occuper tout l'écran */
   height: 100%;
-  /* Couleur de fond et de texte définies via variables CSS */
-  background-color: #323840;
+  background-color: var(--menu-bg-color, #323840);
   max-width: 50%;
   margin-top: 0;
-  color: var(--secondary-color);
+  color: var(--menu-text-color, #fff);
+  gap: 20px; /* Ajout pour espacer les éléments */
+  padding: 20px;
+  border-radius: 10px; /* Adoucissement des bords */
 }
 
 /* Styles du titre du menu */
@@ -56,23 +56,35 @@ body {
 
 /* Styles des boutons du menu principal */
 #menu button {
-  /* Taille identique à celle du menu d'instructions */
   padding: var(--button-padding);
   text-transform: uppercase;
   font-size: 1em;
   letter-spacing: 0.1em;
-  position: relative;
   background: transparent;
   color: var(--clr);
   text-decoration: none;
-  transition: 0.5s;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border: 2px solid var(--clr);
+  border-radius: 5px;
 }
 
-/* Styles des boutons du menu principal au survol */
 #menu button:hover {
-  background: transparent; /* Modification ici pour conserver la couleur de fond transparente */
-  color: var(--clr);
-  box-shadow: 0 0 35px var(--clr);
+  background: var(--clr);
+  color: var(--menu-text-color);
+  box-shadow: 0 0 10px var(--clr);
+}
+
+@keyframes button-hover {
+  from {
+    box-shadow: 0 0 0 var(--clr);
+  }
+  to {
+    box-shadow: 0 0 35px var(--clr);
+  }
+}
+
+#menu button:hover {
+  animation: button-hover 0.3s ease-in-out;
 }
 
 /* Styles du conteneur des instructions */
@@ -137,22 +149,31 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  
   /* Styles de fond */
-  background-color: var(--highlight-color);
-  /* Arrondissement des coins */
-  border-radius: 5px;
-  /* Ajout de la bordure bleue */
-  border: 5px solid var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent pour contraster avec le jeu */
+  border-radius: 10px; /* Coins arrondis pour un design moderne */
+  padding: 20px; /* Espacement autour du contenu */
+  
+  /* Bordure pour bien délimiter le conteneur */
+  border: 5px solid var(--primary-color); /* Couleur principale définie dans :root */
+  box-shadow: 0 0 20px rgba(90, 101, 241, 0.5); /* Ombre légère pour un effet visuel */
+  
   /* Par défaut, le conteneur n'est pas visible */
   display: none;
-  /* Centrage du contenu */
+  
+  /* Centrage et alignement du contenu */
   justify-content: center;
   align-items: center;
-  /* Hauteur minimale pour remplir la fenêtre de visualisation */
-  min-height: 100vh;
-  /* Centrage du conteneur */
+  
+  /* Dimensions */
+  min-height: 100vh; /* Remplir toute la hauteur de la fenêtre */
+  min-width: 320px; /* Largeur minimale pour garantir une mise en page correcte */
+  
+  /* Centrage automatique */
   margin: auto;
 }
+
 
 /* Modification du style du conteneur de jeu lorsque la classe .game-started est ajoutée */
 #game-container.game-started {
@@ -168,12 +189,16 @@ body {
   background-color: #1f2489;
 }
 .frame {
-  color: #fff;
-  padding: 20px;
-  border: 2px solid var(--primary-color);
-  border-radius: 15px;
-  position: fixed;
+  color: #fff; /* Couleur du texte */
+  font-family: 'Orbitron', sans-serif; /* Police futuriste */
+  background-color: rgba(50, 56, 64, 0.8); /* Fond semi-transparent */
+  padding: 20px; /* Espacement interne */
+  border: 2px solid var(--primary-color); /* Bordure colorée */
+  border-radius: 15px; /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre subtile */
+  position: fixed; /* Positionnement fixe pour rester visible */
 }
+
 
 #score-frame {
   position: fixed;
@@ -289,8 +314,12 @@ body {
 #controls button:hover {
   background-color: var(--clr); /* Changement de fond au survol */
   color: var(--secondary-color); /* Changement de couleur du texte au survol */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Ombre portée plus prononcée au survol */
+  transform: scale(1.1); /* Effet de mise en avant */
+  box-shadow: 0 4px 10px rgba(90, 101, 241, 0.8); /* Effet lumineux et ombre portée */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transition fluide */
 }
+
+
 
 
 /* Styles du score */
@@ -398,41 +427,67 @@ body {
   border: 1px solid #000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+@keyframes highlight {
+  0% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
+  100% { transform: scale(1.1); box-shadow: 0 0 0 transparent; }
+}
 
+.block {
+  animation: highlight 1.5s ease-in-out;
+}
+
+/* Tetriminos Styles */
+
+/* I : Une barre droite (4 blocs alignés) */
 .i {
-  /* styles spécifiques pour le Tetramino I */
-  background: linear-gradient(45deg, cyan, darkcyan);
+  background: linear-gradient(45deg, #00e5ff, #009688); /* Cyan brillant */
+  border: 2px solid #00ffff;
+  box-shadow: inset 0 0 10px #00ffff, 0 0 15px cyan;
 }
 
+/* O : Un carré (2x2 blocs) */
 .o {
-  /* styles spécifiques pour le Tetramino O */
-  background: linear-gradient(45deg, yellow, gold);
+  background: linear-gradient(45deg, #ffeb3b, #ffc107); /* Jaune brillant */
+  border: 2px solid #ffd740;
+  box-shadow: inset 0 0 10px #ffd740, 0 0 15px gold;
 }
 
+/* T : Une forme en "T" (un bloc central avec trois blocs connectés autour) */
 .t {
-  /* styles spécifiques pour le Tetramino T */
-  background: linear-gradient(45deg, purple, darkblue);
+  background: linear-gradient(45deg, #7e57c2, #5e35b1); /* Violet profond */
+  border: 2px solid #d1c4e9;
+  box-shadow: inset 0 0 10px #d1c4e9, 0 0 15px purple;
 }
 
+/* S : Une forme en zigzag ou "S" (blocs connectés diagonaux, inclinés vers la droite) */
 .s {
-  /* styles spécifiques pour le Tetramino S */
-  background: linear-gradient(45deg, green, darkgreen);
+  background: linear-gradient(45deg, #00e676, #00c853); /* Vert vif */
+  border: 2px solid #76ff03;
+  box-shadow: inset 0 0 10px #76ff03, 0 0 15px green;
 }
 
+/* Z : Une forme en zigzag inversé ou "Z" (blocs connectés diagonaux, inclinés vers la gauche) */
 .z {
-  /* styles spécifiques pour le Tetramino Z */
-  background: linear-gradient(45deg, red, darkred);
+  background: linear-gradient(45deg, #f44336, #d32f2f); /* Rouge éclatant */
+  border: 2px solid #ff5252;
+  box-shadow: inset 0 0 10px #ff5252, 0 0 15px red;
 }
 
+/* J : Une forme en "J" (trois blocs alignés avec un bloc connecté en bas à gauche) */
 .j {
-  /* styles spécifiques pour le Tetramino J */
-  background: linear-gradient(45deg, blue, darkblue);
+  background: linear-gradient(45deg, #1e88e5, #1565c0); /* Bleu profond */
+  border: 2px solid #82b1ff;
+  box-shadow: inset 0 0 10px #82b1ff, 0 0 15px blue;
 }
 
+/* L : Une forme en "L" (trois blocs alignés avec un bloc connecté en bas à droite) */
 .l {
-  /* styles spécifiques pour le Tetramino L */
-  background: linear-gradient(45deg, orange, darkorange);
+  background: linear-gradient(45deg, #ff9800, #ef6c00); /* Orange vif */
+  border: 2px solid #ffab40;
+  box-shadow: inset 0 0 10px #ffab40, 0 0 15px orange;
 }
+
+
 .modal {
   position: fixed;
   z-index: 1;
